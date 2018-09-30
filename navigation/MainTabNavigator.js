@@ -18,7 +18,7 @@ TodoStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-list-outline${focused ? '' : '-outline'}`
+          ? `ios-list${focused ? '' : '-outline'}`
           : 'md-checkbox-outline'
       }
     />
