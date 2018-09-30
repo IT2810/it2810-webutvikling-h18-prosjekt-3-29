@@ -12,7 +12,7 @@ const HomeStack = createStackNavigator({
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Todo',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
