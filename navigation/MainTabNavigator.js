@@ -3,23 +3,23 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
+import TodoScreen from '../screens/TodoScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+const TodoStack = createStackNavigator({
+  Home: TodoScreen,
 });
 
-HomeStack.navigationOptions = {
+TodoStack.navigationOptions = {
   tabBarLabel: 'Todo',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-list-outline${focused ? '' : '-outline'}`
+          : 'md-checkbox-outline'
       }
     />
   ),
@@ -34,7 +34,7 @@ LinksStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+      name={Platform.OS === 'ios' ? `ios-paw${focused ? '' : '-outline'}` : 'md-paw'}
     />
   ),
 };
@@ -44,17 +44,17 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: 'Achievements',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={Platform.OS === 'ios' ? `ios-ribbon${focused ? '' : '-outline'}` : 'md-ribbon'}
     />
   ),
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
+  TodoStack,
   LinksStack,
   SettingsStack,
 });
