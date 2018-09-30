@@ -30,7 +30,7 @@ const LinksStack = createStackNavigator({
 });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  tabBarLabel: 'Step Counter',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
