@@ -61,11 +61,11 @@ export default class PomodoroScreen extends React.Component {
 
   _addFinishedPomodoroToAsync = async () => {
 
-    let counter = (this.state.finishedPomodoros + 1) + "";
+    let counter = String(this.state.finishedPomodoros + 1)
 
     try {
       await AsyncStorage.setItem('pomodoroCounter', counter);
-      this.setState({finishedPomodoros : counter})
+      this.setState({finishedPomodoros : parseInt(counter)})
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
