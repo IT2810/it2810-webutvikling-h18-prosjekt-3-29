@@ -2,11 +2,12 @@ import React from 'react';
 import MapView from 'react-native-maps';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
-
+import { IntentLauncherAndroid } from 'expo';
 
 
 export default class FocusScreen extends React.Component {
   state = {
+    region: {},
     location: null,
     errorMessage: null,
   };
@@ -15,8 +16,20 @@ export default class FocusScreen extends React.Component {
     title: 'Focus',
   };
 
+  _checkProviderAsync = async () => {
+    let {status } = await Expo.Location.getProviderStatusAsync();
+    if(status.locationServicesEnabled === 'false' || status.gpsAvailable === 'false'){
+        IntentLauncherAndroid.startActivityAsync(
+          IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
+        ); 
+    } else {
+      alert("Finding your position")
+    }
+  };
+
   componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
+      this._checkProviderAsync();
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
@@ -35,7 +48,13 @@ export default class FocusScreen extends React.Component {
       });
     }
     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-    console.log("LOCATION: " + location);
+    console.log(JSON.stringify(location.coords))
+    this.setState({region: {
+        latitude:       location.coords.latitude,
+        longitude:      location.coords.longitude,
+        latitudeDelta:  0.00922*1.5,
+        longitudeDelta: 0.00421*1.5
+    }})
     this.setState({ location });
   };
 
@@ -45,8 +64,7 @@ export default class FocusScreen extends React.Component {
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
-      console.log("TWEREWR" + text);
+      text = JSON.stringify(this.state.location.coords.latitude);
     }
     return (
       <View style={styles.container}>
