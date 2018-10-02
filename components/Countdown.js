@@ -55,7 +55,6 @@ export class Countdown extends Component {
 
   render() {
 
-
     return (
         <Text> {this.state.min} : {this.state.sec} : {this.state.centiSec}</Text>
     )

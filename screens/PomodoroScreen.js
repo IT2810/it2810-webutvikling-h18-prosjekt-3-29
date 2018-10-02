@@ -13,6 +13,52 @@ export default class PomodoroScreen extends React.Component {
     }
   }
 
+  static navigationOptions = {
+    title: 'Pomodoro',
+  };
+
+  componentDidMount() {
+    this._getFinishedPomodorosFromAsync()
+  }
+
+  handleFinished = (finVal) => {
+    if (finVal == "work") {
+      this.setState({startPause : true})
+    } else if (finVal == "pause") {
+      this.setState({startPause : false})
+      this.setState({startWork : false})
+      Alert.alert("Pomodoro finished, gz")
+      this._addFinishedPomodoroToAsync();
+    }
+  }
+
+  toggleButton = () => {
+    this.setState({ startWork : !this.state.startWork})
+    if (this.state.startPause) {
+      this.setState({startPause : false})
+    }
+
+  }
+
+  render() {
+    return (
+        <ScrollView style={styles.container}>
+            <Text> Work: </Text> {this.state.startWork ? <Countdown type="work" time="0.1" onWorkFinished ={this.handleFinished}/> : <Text> 25 : 00 : 000</Text>}
+            <Text> Pause: </Text> {this.state.startPause ? <Countdown type="pause" time="0.05" onWorkFinished ={this.handleFinished}/> : <Text> 05 : 00 : 000</Text>}
+            <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton}/>
+            
+            <Text>{"\n\n\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
+        </ScrollView>
+    );
+  }
+
+
+
+
+
+
+  //funksjoner for get og set av async-item
+
   _addFinishedPomodoroToAsync = async () => {
 
     let counter = (this.state.finishedPomodoros + 1) + "";
@@ -45,45 +91,6 @@ export default class PomodoroScreen extends React.Component {
    }
   }
 
-  componentDidMount() {
-    this._getFinishedPomodorosFromAsync()
-  }
-  
-  
-  static navigationOptions = {
-      title: 'Pomodoro',
-    };
-
-  handleFinished = (finVal) => {
-    if (finVal == "work") {
-      this.setState({startPause : true})
-    } else if (finVal == "pause") {
-      this.setState({startPause : false})
-      this.setState({startWork : false})
-      Alert.alert("Pomodoro finished, gz")
-      this._addFinishedPomodoroToAsync();
-    }
-  }
-
-  toggleButton = () => {
-    this.setState({ startWork : !this.state.startWork})
-    if (this.state.startPause) {
-      this.setState({startPause : false})
-    }
-
-  }
-
-  render() {
-    return (
-        <ScrollView style={styles.container}>
-            <Text> Work: </Text> {this.state.startWork ? <Countdown type="work" time="0.1" onWorkFinished ={this.handleFinished}/> : <Text> 25 : 00 : 000</Text>}
-            <Text> Pause: </Text> {this.state.startPause ? <Countdown type="pause" time="0.05" onWorkFinished ={this.handleFinished}/> : <Text> 05 : 00 : 000</Text>}
-            <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton}/>
-            
-            <Text>{"\n\n\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
-        </ScrollView>
-    );
-  }
 }
 
 const styles = StyleSheet.create({
