@@ -36,28 +36,27 @@ export default class FocusScreen extends React.Component {
   };
   
     componentWillMount() {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
+      if (Platform.OS === 'android') {
         this._checkProviderAsync();
-        this.setState({
-          errorMessage: 'This will not work on your device',
-        });
-      } else {
-        this._getLocationAsync();
-      }
+      } 
+      this._getLocationAsync();
     }
     
     componentDidMount() {
       let counter = 0
       console.log('Mounted!')
       this.watchId = Location.watchPositionAsync({
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
         distanceInterval: 2,
-        timeInterval: 2000
-      }, (newLoc) => {
-        if(newLoc.timestamp){
-          console.log('COUNTER: ', counter)
-          console.log("New lat" + newLoc.coords.latitude)
-          counter++
+        timeInterval: 8000
+      }, (location) => {
+        if(location.timestamp){
+          this.setState({region: {
+            latitude:       location.coords.latitude,
+            longitude:      location.coords.longitude,
+            latitudeDelta:  0.00922*1.5,
+            longitudeDelta: 0.00421*1.5
+        }})
         }
       })
     }
@@ -66,24 +65,25 @@ export default class FocusScreen extends React.Component {
       Alert.alert('Component unmounting!')
       this.watchId.remove()
     }
-/*
+
     componentDidUpdate(prevState){
       if(prevState.region != this.state.region){
         let distanceFromTarget = getDistanceFromLatLonInKm(this.state.startRegion.latitude
           ,this.state.startRegion.longitude,
           this.state.region.latitude,
           this.state.region.longitude);
-        if(distanceFromTarget >= 0.0002){
+        if(distanceFromTarget >= 0.005){
           alert("No points!")
         }
       } else {
         console.log("adas")
       }
     }
-*/
+
     /* For Android 6. we need to specifically override LocationServices at first launch 
     /* due to incompatibility between expo.cli and Android SDK
     */
+
   _checkProviderAsync = async () => {
     let {status } = await Expo.Location.getProviderStatusAsync();
     if(status.locationServicesEnabled === 'false' || status.gpsAvailable === 'false'){
