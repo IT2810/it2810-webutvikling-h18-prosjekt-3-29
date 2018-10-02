@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import TodoScreen from '../screens/TodoScreen';
-import LinksScreen from '../screens/LinksScreen';
+import FocusScreen from '../screens/FocusScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const TodoStack = createStackNavigator({
@@ -25,16 +25,16 @@ TodoStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const FocusStack = createStackNavigator({
+  Links: FocusScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Step Counter',
+FocusStack.navigationOptions = {
+  tabBarLabel: 'Focus',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-paw${focused ? '' : '-outline'}` : 'md-paw'}
+      name={Platform.OS === 'ios' ? `ios-speedometer${focused ? '' : '-outline'}` : 'md-speedometer'}
     />
   ),
 };
@@ -55,6 +55,6 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   TodoStack,
-  LinksStack,
+  FocusStack,
   SettingsStack,
 });
