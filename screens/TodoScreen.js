@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import TodosContainer from '../components/TodosContainer';
 
 export default class TodoScreen extends React.Component {
   static navigationOptions = {
@@ -20,6 +21,7 @@ export default class TodoScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Text style={styles.header}>Todo</Text>
+            <TodosContainer />
           </View>
         </ScrollView>
       </View>
