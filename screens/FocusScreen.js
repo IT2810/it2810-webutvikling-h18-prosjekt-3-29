@@ -35,7 +35,7 @@ export default class FocusScreen extends React.Component {
   };
   
   static navigationOptions = {
-    title: 'Gløshaugen Focus',
+    title: 'Gløshaugen Focuss',
   };
   componentWillMount() {
     if (Platform.OS === 'android') {
@@ -100,12 +100,21 @@ export default class FocusScreen extends React.Component {
   };
 
   render() {
+
+    /* If one wants conditional styles on map based on OS */
+    let mapStylePlatform = "";
+    if (Platform.OS === 'android') {
+      mapStylePlatform = MapStyle;
+    } else {
+      mapStylePlatform = MapStyle;
+    }
+    
     return (
       <View style={styles.container}>
         <MapView
           provider={MapView.PROVIDER_GOOGLE}
           style={styles.map}
-          customMapStyle={MapStyle}
+          customMapStyle={mapStylePlatform}
           region={this.state.region}
           showsUserLocation={true}
           followUserLocation={true}>
