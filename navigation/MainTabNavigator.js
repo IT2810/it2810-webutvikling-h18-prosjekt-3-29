@@ -5,6 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import TodoScreen from '../screens/TodoScreen';
 import FocusScreen from '../screens/FocusScreen';
+import PomodoroScreen from '../screens/PomodoroScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const TodoStack = createStackNavigator({
@@ -39,6 +40,20 @@ FocusStack.navigationOptions = {
   ),
 };
 
+const PomodoroStack = createStackNavigator({
+  Pomodoros: PomodoroScreen,
+});
+
+PomodoroStack.navigationOptions = {
+  tabBarLabel: 'Pomodoro',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-speedometer${focused ? '' : '-outline'}` : 'md-speedometer'}
+    />
+  ),
+};
+
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
@@ -56,5 +71,6 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   TodoStack,
   FocusStack,
+  PomodoroStack,
   SettingsStack,
 });
