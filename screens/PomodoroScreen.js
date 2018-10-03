@@ -71,10 +71,6 @@ export default class PomodoroScreen extends React.Component {
     }
   }
 
-  idleOrNot() {
-    return (this.whereWeAt() == "idle")
-  }
-
   whichBackgroundColor() {
     if (this.whereWeAt() == "idle") {
       return ('#fff')
@@ -91,7 +87,7 @@ export default class PomodoroScreen extends React.Component {
     return (
         <View style={[styles.container, {backgroundColor : this.whichBackgroundColor()}]}>
 
-          <Text style={this.idleOrNot() ? styles.idleHeader : styles.header}>  {this.whereWeAt()}  </Text>
+          <Text style={this.whereWeAt() == "idle" ? styles.idleHeader : styles.header}>  {this.whereWeAt()}  </Text>
 
           <ProgressCircle style={styles.progressCircle}
               percent={this.state.startPause ? this.state.pauseProgress : this.state.workProgress}
