@@ -24,6 +24,7 @@ export default class PomodoroScreen extends React.Component {
     this._getFinishedPomodorosFromAsync()
   }
 
+  //Blir kjørt hvis Countdown sier i fra at nedtellingen er ferdig
   handleFinished = (type) => {
     if (type == "work") {
       this.setState({startPause : true})
@@ -37,6 +38,7 @@ export default class PomodoroScreen extends React.Component {
     }
   }
 
+  //Tar i mot progress fra countdown 
   handleProgress = (progVal, type) => {
     if (type == "work") {
       this.setState({workProgress : progVal})
@@ -45,6 +47,7 @@ export default class PomodoroScreen extends React.Component {
     } 
   }
 
+  //Skrur av og på Pomodoro og setter relevante states
   toggleButton = () => {
     this.setState({ startWork : !this.state.startWork})
     if (this.state.startPause) {
@@ -52,15 +55,16 @@ export default class PomodoroScreen extends React.Component {
     }
     this.setState({workProgress : 0})
     this.setState({pauseProgress : 0})
-
   }
 
+  //Hvilken status Pomodoro er på akkurat nå 
   whereWeAt() {
     if (this.state.startWork == false && this.state.startPause == false) { return "idle" } 
     else if (this.state.startWork == true && this.state.startPause == false) { return "work" } 
     else if (this.state.startPause == true) { return "pause" }
   }
 
+  //Hvilken timer som skal vises, jobb-timer (25 min) eller pause-timer (5 min)
   whichTimer() {
     if (this.whereWeAt() == "idle") {
       return (<Text style={styles.countdownIdle}> 25 : 00 </Text>)
@@ -71,6 +75,7 @@ export default class PomodoroScreen extends React.Component {
     }
   }
 
+  //Bestemmer bakgrunnsfarge etter pomodoro-status
   whichBackgroundColor() {
     if (this.whereWeAt() == "idle") {
       return ('#fff')
@@ -81,44 +86,30 @@ export default class PomodoroScreen extends React.Component {
     }
   }
 
-
-
   render() {
     return (
         <View style={[styles.container, {backgroundColor : this.whichBackgroundColor()}]}>
-
           <Text style={this.whereWeAt() == "idle" ? styles.idleHeader : styles.header}>  {this.whereWeAt()}  </Text>
-
           <ProgressCircle style={styles.progressCircle}
               percent={this.state.startPause ? this.state.pauseProgress : this.state.workProgress}
               radius={150}
               borderWidth={5}
               color="#ffffff"
               shadowColor="#4b4b4b"
-              bgColor={this.whichBackgroundColor()}
-          >
-
-            {this.whichTimer()}
-
+              bgColor={this.whichBackgroundColor()}>
+          {this.whichTimer()}
           </ProgressCircle>
-
-            <Text>{"\n"}</Text>
-
-            
-            <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton}/>
-            
-            <Text>{"\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
+          <Text>{"\n"}</Text>
+          <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton}/>
+          <Text style={this.whereWeAt() == "idle" ? styles.idleText : styles.text }>{"\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
         </View>
     );
   }
 
 
 
-
-
-
   //funksjoner for get og set av async-item
-
+  
   _addFinishedPomodoroToAsync = async () => {
 
     let counter = String(this.state.finishedPomodoros + 1)
@@ -134,11 +125,9 @@ export default class PomodoroScreen extends React.Component {
   }
 
   _getFinishedPomodorosFromAsync = async () => {
-    console.log("async")
     try {
       let donePomodoros = await AsyncStorage.getItem('pomodoroCounter');
      if (donePomodoros == null) {
-       console.log("fin: " + 0)
       this.setState({finishedPomodoros : 0})
      }
      else {
@@ -150,8 +139,9 @@ export default class PomodoroScreen extends React.Component {
      console.log(error.message);
    }
   }
-
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -173,6 +163,12 @@ const styles = StyleSheet.create({
   header: {
     color: 'white',
     fontSize: 30,
+  },
+  idleText: {
+    color:'#4b4b4b',
+  },
+  text: {
+    color: 'white',
   },
   countdownIdle: {
     color: '#4b4b4b',
