@@ -86,7 +86,7 @@ export default class FocusScreen extends React.Component {
       this.state.validLong)
 
     console.log("Distance is now: " + distanceNow);
-    if(distanceNow >= 0.01){
+    if(distanceNow >= 0.005){
       console.log("TOO FAR OFF")
       alert("TOO FAR OFF")
     }
