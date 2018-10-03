@@ -35,7 +35,7 @@ FocusStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-speedometer${focused ? '' : '-outline'}` : 'md-speedometer'}
+      name={Platform.OS === 'ios' ? `ios-compass${focused ? '' : '-outline'}` : 'md-compass'}
     />
   ),
 };
@@ -49,7 +49,7 @@ PomodoroStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-speedometer${focused ? '' : '-outline'}` : 'md-speedometer'}
+      name={Platform.OS === 'ios' ? `ios-stopwatch${focused ? '' : '-outline'}` : 'md-stopwatch'}
     />
   ),
 };
