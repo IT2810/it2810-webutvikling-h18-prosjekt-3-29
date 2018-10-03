@@ -3,6 +3,9 @@ import MapView from 'react-native-maps';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import { IntentLauncherAndroid } from 'expo';
+import { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapStyle from './mapStyle.json';
+
 
 /* Common implementation of Haversine Formula */
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
@@ -26,59 +29,26 @@ function deg2rad(deg) {
 export default class FocusScreen extends React.Component {
   state = {
     region: {},
-    startRegion: {},
+    validLat: 63.4207801, //Kunnskapssenteret Øya
+    validLong: 10.3880327, //Kunnskapssenteret Øya
     errorMessage: null,
-    distance: null,
   };
   
   static navigationOptions = {
     title: 'Gløshaugen Focus',
   };
-  
-    componentWillMount() {
-      if (Platform.OS === 'android') {
-        this._checkProviderAsync();
-      } 
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      this._checkProviderAsync();
+    } 
+    this._getLocationAsync();
+  }
+
+  componentDidMount(){
+    this.interval = setInterval(() => {
       this._getLocationAsync();
-    }
-    
-    componentDidMount() {
-      let counter = 0
-      console.log('Mounted!')
-      this.watchId = Location.watchPositionAsync({
-        enableHighAccuracy: true,
-        distanceInterval: 2,
-        timeInterval: 8000
-      }, (location) => {
-        if(location.timestamp){
-          this.setState({region: {
-            latitude:       location.coords.latitude,
-            longitude:      location.coords.longitude,
-            latitudeDelta:  0.00922*1.5,
-            longitudeDelta: 0.00421*1.5
-        }})
-        }
-      })
-    }
-
-    componentWillUnmount() {
-      Alert.alert('Component unmounting!')
-      this.watchId.remove()
-    }
-
-    componentDidUpdate(prevState){
-      if(prevState.region != this.state.region){
-        let distanceFromTarget = getDistanceFromLatLonInKm(this.state.startRegion.latitude
-          ,this.state.startRegion.longitude,
-          this.state.region.latitude,
-          this.state.region.longitude);
-        if(distanceFromTarget >= 0.005){
-          alert("No points!")
-        }
-      } else {
-        console.log("adas")
-      }
-    }
+    }, 5000);
+  }
 
     /* For Android 6. we need to specifically override LocationServices at first launch 
     /* due to incompatibility between expo.cli and Android SDK
@@ -93,7 +63,10 @@ export default class FocusScreen extends React.Component {
     } 
   };
 
-  /* Fetch current position using expo-api, set this position to state*/
+  /* Fetch current position using expo-api, set this position to state
+  /* Calculate distance from current location to known valid location, 
+  /* if distance is too large -> dont give points
+  */
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if(status === 'granted'){
@@ -105,29 +78,43 @@ export default class FocusScreen extends React.Component {
       });
     }
     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+    let currentLat = location.coords.latitude;
+    let currentLong = location.coords.longitude;
+    let distanceNow = getDistanceFromLatLonInKm(currentLat,
+      currentLong,
+      this.state.validLat,
+      this.state.validLong)
+
+    console.log("Distance is now: " + distanceNow);
+    if(distanceNow >= 0.05){
+      console.log("TOO FAR OFF")
+      alert("TOO FAR OFF")
+    }
+    this.setState({region: {
+      latitude:       currentLat,
+      longitude:      currentLong,
+      latitudeDelta:  0.00922*1.6,
+      longitudeDelta: 0.00421*1.6,
+    }})  
     console.log(JSON.stringify(location.coords))
-    this.setState({startRegion: {
-        latitude:       location.coords.latitude,
-        longitude:      location.coords.longitude,
-        latitudeDelta:  0.00922*1.5,
-        longitudeDelta: 0.00421*1.5
-    }})
   };
 
   render() {
     return (
       <View style={styles.container}>
         <MapView
+          provider={MapView.PROVIDER_GOOGLE}
           style={styles.map}
-          region={this.state.startRegion}
+          customMapStyle={MapStyle}
+          region={this.state.region}
           showsUserLocation={true}
           followUserLocation={true}>
          <MapView.Circle
           center={{
-          latitude: 63.421164,
-          longitude: 10.387444,
+          latitude: this.state.validLat,
+          longitude: this.state.validLong,
         }}
-          radius={400}
+          radius={100}
           strokeWidth={2}
           strokeColor="#3399ff"
           fillColor="rgba(227,210,210,0.5)"
