@@ -35,17 +35,13 @@ export default class AddTodo extends React.Component {
   render() {
     return (
       <View style={styles.addTodoContainer}>
-
-        //TEXTINPUT
         <View>
           <TextInput
             style={styles.inputField}
             onChangeText={(txt) => this.setState({text: txt})}
-            value={this.state.text}
+            value={!!this.state.text}
           />
         </View>
-
-        //BUTTON
         <View>
           <TouchableOpacity onPress={this.addNewTodo}
            style={styles.addSpecificTodoBtn}
@@ -53,7 +49,6 @@ export default class AddTodo extends React.Component {
            <Text>Add new Todo!</Text>
          </TouchableOpacity>
        </View>
-
     </View>
     );
   }
@@ -72,7 +67,6 @@ const styles = StyleSheet.create({
     height: 30,
   },
   addTodoContainer: {
-    position: 'fixed',
     bottom: -130,
     left: 0,
     alignItems: 'stretch',
