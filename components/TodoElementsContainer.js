@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   AsyncStorage,
   View,
-  Button
 } from 'react-native';
 
 import TodoElement from './TodoElement';

@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  Button,
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   TextInput,
-  Alert,
 } from 'react-native';
+import { Input, Button, Item } from 'native-base';
 
 export default class AddTodo extends React.Component {
 
@@ -22,9 +18,9 @@ export default class AddTodo extends React.Component {
     }
   }
 
+    //bruker addNewTodo i TodosContainer for å legge til ny sjekkboks med teksten som er i textinput, som blir lagret i state
   addNewTodo = () => {
     if (this.state.text.length >= 1) {
-      //bruker addNewTodo i TodosContainer for å legge til ny sjekkboks med teksten som er i textinput, som blir lagret i state
       this.props.addNewTodo(this.state.text)
       this.setState({
         text: ""
@@ -38,20 +34,23 @@ export default class AddTodo extends React.Component {
 
         //TEXTINPUT
         <View>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(txt) => this.setState({text: txt})}
-            value={this.state.text}
-          />
+          <Item rounded={true} style={styles.inputField}>
+            <Input
+              placeholder="Write your todo here.."
+              onChangeText={(txt) => this.setState({text: txt})}
+              value={this.state.text}
+            />
+            <Button rounded onPress={this.addNewTodo}
+             style={styles.addSpecificTodoBtn}
+           >
+             <Text style={styles.buttonText}>Add!</Text>
+           </Button>
+          </Item>
         </View>
 
         //BUTTON
         <View>
-          <TouchableOpacity onPress={this.addNewTodo}
-           style={styles.addSpecificTodoBtn}
-         >
-           <Text>Add new Todo!</Text>
-         </TouchableOpacity>
+
        </View>
 
     </View>
@@ -63,18 +62,19 @@ const styles = StyleSheet.create({
   inputField: {
     height: 50,
     width: 300,
-    borderColor: 'gray',
-    borderWidth: 1
   },
   addSpecificTodoBtn: {
     backgroundColor: '#ff7096',
     bottom: 0,
     height: 30,
+    margin: 8,
   },
   addTodoContainer: {
     position: 'fixed',
-    bottom: -130,
     left: 0,
     alignItems: 'stretch',
+  },
+  buttonText: {
+    margin: 2,
   }
 });

@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -32,17 +26,18 @@ export default class TodosContainer extends React.Component {
 
   removeTodo = (txt) => {
     //updates the todolist - removes the box clicked
-    //txt is not set to be something until second time pushed....
     this.setState ({
-      todos: this.state.todos.filter(e => e !== txt)
-    })
+      todos: this.state.todos.filter(todo => todo !== txt)
+    });
+    //, () =>  {console.log(this.state.todos);}
   }
+
 
   render() {
     return (
       <View>
-        <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/>
         <AddTodo addNewTodo={this.addNewTodo} />
+        <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/>
       </View>
     );
   }

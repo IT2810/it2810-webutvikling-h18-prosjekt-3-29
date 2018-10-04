@@ -1,17 +1,11 @@
 import React from 'react';
 import {
-  Button,
-  Image,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  Fab,
-  TouchableOpacity,
   View,
-  Alert,
 } from 'react-native';
-import CheckBox from 'react-native-check-box';
+import { CheckBox, ListItem, Body } from 'native-base';
 
 export default class TodoElement extends React.Component {
   constructor(props) {
@@ -24,25 +18,24 @@ export default class TodoElement extends React.Component {
   }
 
   checkBoxChecked = () => {
-    this.setState({
-      /*text: this.props.text,*/
-      checked: true
-    })
-    console.log(this.state.text);
     this.props.removeTodoElement(this.state.text);
   }
 
   render() {
     return (
       <View>
+        <ListItem>
+          <CheckBox
+            center
+            title='Todo'
+            checked={this.state.checked}
+            onPress={this.checkBoxChecked}
+          />
+          <Body>
+            <Text>{this.props.text}</Text>
+          </Body>
+        </ListItem>
 
-        <CheckBox
-          center
-          title='Todo'
-          checked={this.state.checked}
-          onClick={this.checkBoxChecked}
-        />
-        <Text>{this.props.text}</Text>
 
       </View>
     );
