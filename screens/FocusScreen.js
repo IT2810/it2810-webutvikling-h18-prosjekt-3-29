@@ -1,6 +1,6 @@
 import React from 'react';
 import MapView from 'react-native-maps';
-import { Platform, Text, View, StyleSheet } from 'react-native';
+import { Platform, Text, View, StyleSheet, AsyncStorage } from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import { IntentLauncherAndroid } from 'expo';
 import { PROVIDER_GOOGLE } from 'react-native-maps'
@@ -28,15 +28,19 @@ function deg2rad(deg) {
 
 export default class FocusScreen extends React.Component {
   state = {
+    focusPoints: "",
     region: {},
-    validLat: 63.4207801, //Kunnskapssenteret Øya
-    validLong: 10.3880327, //Kunnskapssenteret Øya
+    validLat: 63.4156144, //A-blokka på Gløshaugen
+    validLong: 10.4045326, //A-blokka på Gløshaugen
     errorMessage: null,
   };
   
+  //Set Title on Page
   static navigationOptions = {
     title: 'Gløshaugen Focuss',
   };
+
+  //If Android device, ask for LocationService permissions, anyhow -> fetch current location
   componentWillMount() {
     if (Platform.OS === 'android') {
       this._checkProviderAsync();
@@ -44,16 +48,17 @@ export default class FocusScreen extends React.Component {
     this._getLocationAsync();
   }
 
+  //Check location every minute to make sure user is within parameters
   componentDidMount(){
+    this._getFocusPointsAsync();
     this.interval = setInterval(() => {
       this._getLocationAsync();
-    }, 5000);
+    }, 10000);
   }
 
     /* For Android 6. we need to specifically override LocationServices at first launch 
     /* due to incompatibility between expo.cli and Android SDK
     */
-
   _checkProviderAsync = async () => {
     let {status } = await Expo.Location.getProviderStatusAsync();
     if(status.locationServicesEnabled === 'false' || status.gpsAvailable === 'false'){
@@ -63,9 +68,36 @@ export default class FocusScreen extends React.Component {
     } 
   };
 
+  _saveFocusPointsAsync = async (value) => {
+    let points = String(this.state.focusPoints + 1)
+      try {
+        await AsyncStorage.setItem('focusPoints', points);
+        this.setState({focusPoints : parseInt(points)})
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+    };
+
+    _getFocusPointsAsync = async () => {
+      try {
+        let focusPointsFetched = await AsyncStorage.getItem('focusPoints');
+       if (focusPointsFetched == null) {
+        this.setState({focusPoints : 0})
+       }
+       else {
+        focusPointsFetched = parseInt(focusPointsFetched)
+         this.setState({focusPoints : focusPointsFetched})
+       }
+     } catch (error) {
+       // Error retrieving data
+       console.log(error.message);
+     }
+    }
+
   /* Fetch current position using expo-api, set this position to state
   /* Calculate distance from current location to known valid location, 
-  /* if distance is too large -> dont give points
+  /* if distance is too large -> dont give points (dont save)
   */
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -77,6 +109,7 @@ export default class FocusScreen extends React.Component {
         errorMessage: 'Permission to access location was denied',
       });
     }
+
     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
     let currentLat = location.coords.latitude;
     let currentLong = location.coords.longitude;
@@ -85,22 +118,24 @@ export default class FocusScreen extends React.Component {
       this.state.validLat,
       this.state.validLong)
 
-    console.log("Distance is now: " + distanceNow);
-    if(distanceNow >= 0.005){
-      console.log("TOO FAR OFF")
-      alert("TOO FAR OFF")
+    if(distanceNow >= 0.05){
+      alert("You are not at Gløshuagen, get back there and study!")
+    } else {
+      this._saveFocusPointsAsync();
+      console.log("From async: " + this._getFocusPointsAsync());
+      console.log("From state: "  + this.state.focusPoints)
     }
+
     this.setState({region: {
       latitude:       currentLat,
       longitude:      currentLong,
-      latitudeDelta:  0.00922*1.6,
-      longitudeDelta: 0.00421*1.6,
+      latitudeDelta:  0.00922*1.6, //Zoom level
+      longitudeDelta: 0.00421*1.6, //Zoom level
     }})  
-    console.log(JSON.stringify(location.coords))
+    console.log("Current position" + JSON.stringify(location.coords))
   };
 
   render() {
-
     /* If one wants conditional styles on map based on OS */
     let mapStylePlatform = "";
     if (Platform.OS === 'android') {
@@ -108,7 +143,6 @@ export default class FocusScreen extends React.Component {
     } else {
       mapStylePlatform = MapStyle;
     }
-    
     return (
       <View style={styles.container}>
         <MapView
