@@ -24,7 +24,7 @@ export default class TodoScreen extends React.Component {
       </View>
     );
   }
-
+  
 }
 
 const styles = StyleSheet.create({
