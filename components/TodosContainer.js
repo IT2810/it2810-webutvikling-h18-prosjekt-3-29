@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Alert,
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -20,23 +13,30 @@ export default class TodosContainer extends React.Component {
     this.state = {
       todos: []
     }
-
     this.addNewTodo = this.addNewTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   addNewTodo = (txt) => {
-    console.log(txt);
+    {/*legger til den nye todoen i lista. Lista sendes så ned til TodoElementsContainer*/}
     this.setState({
       todos: [...this.state.todos, txt]
     })
+  }
+
+  removeTodo = (txt) => {
+    console.log(txt);
+    this.setState ({
+      todos: this.state.todos.filter(todo => todo !== txt)
+    });
   }
 
 
   render() {
     return (
       <View>
-        <TodoElementsContainer todos={this.state.todos}/>
         <AddTodo addNewTodo={this.addNewTodo} />
+        <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/>
       </View>
     );
   }

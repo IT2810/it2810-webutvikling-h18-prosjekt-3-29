@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import TodosContainer from '../components/TodosContainer';
@@ -17,7 +16,7 @@ export default class TodoScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
+          <View style={styles.todoContainer}>
             <Text style={styles.header}>Todo</Text>
             <TodosContainer />
           </View>
@@ -25,20 +24,7 @@ export default class TodoScreen extends React.Component {
       </View>
     );
   }
-
-  _maybeRenderDevelopmentModeWarning() {
-
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  
 }
 
 const styles = StyleSheet.create({
@@ -49,7 +35,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
-  welcomeContainer: {
+  todoContainer: {
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
