@@ -70,3 +70,10 @@ packager-info.json
 # ReactCommon subdir shouldn't have Xcode project
 /ReactCommon/**/*.xcodeproj
 RNTester/build
+
+.expo/packager-info.json.1491132938
+.expo/packager-info.json.822296151
+__tests__/__snapshots__/
+components/__tests__/__snapshots__/
+.expo/packager-info.json
+package-lock.json
