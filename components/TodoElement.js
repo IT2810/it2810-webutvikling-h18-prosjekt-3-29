@@ -18,7 +18,7 @@ export default class TodoElement extends React.Component {
   }
 
   checkBoxChecked = () => {
-    this.props.removeTodoElement(this.state.text);
+    this.props.removeTodoElement(this.props.text);
   }
 
   render() {

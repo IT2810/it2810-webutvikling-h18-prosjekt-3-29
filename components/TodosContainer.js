@@ -25,11 +25,11 @@ export default class TodosContainer extends React.Component {
   }
 
   removeTodo = (txt) => {
-    //updates the todolist - removes the box clicked
+    //txt oppdaterer seg ikke når det kun er et element igjen? elleeeer
+    console.log(txt);
     this.setState ({
       todos: this.state.todos.filter(todo => todo !== txt)
     });
-    //, () =>  {console.log(this.state.todos);}
   }
 
 
