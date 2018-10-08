@@ -20,7 +20,7 @@ export default class TodoElementsContainer extends React.Component {
   render() {
     return (
       <View>
-        /*her går vi gjennom lista som ble sendt ned fra todoscontainer, og legger dem til.*/
+        {/*her går vi gjennom lista som ble sendt ned fra todoscontainer, og legger dem til.*/}
         { this.props.todos.map((todo) => <TodoElement text={todo} removeTodoElement={this.removeTodoElement}/>) }
       </View>
     );

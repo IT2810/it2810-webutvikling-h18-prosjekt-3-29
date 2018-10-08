@@ -18,7 +18,6 @@ export default class AddTodo extends React.Component {
     }
   }
 
-    //bruker addNewTodo i TodosContainer for å legge til ny sjekkboks med teksten som er i textinput, som blir lagret i state
   addNewTodo = () => {
     if (this.state.text.length >= 1) {
       this.props.addNewTodo(this.state.text)
@@ -31,8 +30,6 @@ export default class AddTodo extends React.Component {
   render() {
     return (
       <View style={styles.addTodoContainer}>
-
-        //TEXTINPUT
         <View>
           <Item rounded={true} style={styles.inputField}>
             <Input
@@ -47,12 +44,8 @@ export default class AddTodo extends React.Component {
            </Button>
           </Item>
         </View>
-
-        //BUTTON
-        <View>
-
-       </View>
-
+      <View>
+     </View>
     </View>
     );
   }
@@ -70,7 +63,7 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   addTodoContainer: {
-    position: 'fixed',
+    position: 'relative',
     left: 0,
     alignItems: 'stretch',
   },

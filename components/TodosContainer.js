@@ -18,14 +18,13 @@ export default class TodosContainer extends React.Component {
   }
 
   addNewTodo = (txt) => {
-    //legger til den nye todoen i lista. LIsta sendes så ned til TodoElementsContainer
+    {/*legger til den nye todoen i lista. Lista sendes så ned til TodoElementsContainer*/}
     this.setState({
       todos: [...this.state.todos, txt]
     })
   }
 
   removeTodo = (txt) => {
-    //txt oppdaterer seg ikke når det kun er et element igjen? elleeeer
     console.log(txt);
     this.setState ({
       todos: this.state.todos.filter(todo => todo !== txt)
