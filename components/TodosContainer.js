@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
   AsyncStorage
 } from 'react-native';
 
@@ -16,8 +15,6 @@ export default class TodosContainer extends React.Component {
       todos: [],
       finishedTodos: ''
     }
-    this.addNewTodo = this.addNewTodo.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
   }
 
   componentDidMount() {
@@ -54,9 +51,9 @@ export default class TodosContainer extends React.Component {
     let counter = String(this.state.finishedTodos + 1);
     try {
       await AsyncStorage.setItem('finishedTodosCounter',counter);
-      this.setState = ({finishedTodos: parseInt(counter)});
+      this.setState({finishedTodos: parseInt(counter)});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -83,17 +80,16 @@ export default class TodosContainer extends React.Component {
   }
 
   removeTodo = (txt) => {
-    console.log(txt);
-    this.setState ({
+    this.setState({
       todos: this.state.todos.filter(todo => todo !== txt)
     });
+    /*updates the nr of completed todos in async storage*/
     this.addFinishedTodosToAsync();
   }
 
   render() {
     return (
       <View>
-        <Text>{this.state.finishedTodos}</Text>
         <AddTodo addNewTodo={this.addNewTodo} />
         <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/>
       </View>

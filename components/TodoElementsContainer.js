@@ -10,7 +10,6 @@ export default class TodoElementsContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.removeTodoElement = this.removeTodoElement.bind(this);
   }
 
   removeTodoElement = (txt) => {

@@ -14,7 +14,6 @@ export default class TodoElement extends React.Component {
       text: this.props.text,
       checked: false
     }
-    this.checkBoxChecked = this.checkBoxChecked.bind(this);
   }
 
   checkBoxChecked = () => {
