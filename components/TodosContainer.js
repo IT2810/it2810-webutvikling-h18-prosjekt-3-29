@@ -29,6 +29,8 @@ export default class TodosContainer extends React.Component {
     this.setState ({
       todos: this.state.todos.filter(todo => todo !== txt)
     });
+    {/*adds +1 to nr of finished todos*/}
+    this.props.addFinishedTodosToAsync();
   }
 
 
