@@ -69,9 +69,9 @@ export default class PomodoroScreen extends React.Component {
     if (this.whereWeAt() == "idle") {
       return (<Text style={styles.countdownIdle}> 25 : 00 </Text>)
     } else if (this.whereWeAt() == "work") {
-      return (<Countdown key="1" type="work" time="0.5" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
+      return (<Countdown key="1" type="work" time="0.01" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
     } else if (this.whereWeAt() == "pause") {
-      return (<Countdown key="2" type="pause" time="0.25" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
+      return (<Countdown key="2" type="pause" time="0.0025" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
     }
   }
 
