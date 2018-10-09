@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import TodoScreen from '../screens/TodoScreen';
 import FocusScreen from '../screens/FocusScreen';
 import PomodoroScreen from '../screens/PomodoroScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import AchievementsScreen from '../screens/AchievementsScreen';
 
 const TodoStack = createStackNavigator({
   Home: TodoScreen,
@@ -54,11 +54,11 @@ PomodoroStack.navigationOptions = {
   ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const AchievementsStack = createStackNavigator({
+  Achievements: AchievementsScreen,
 });
 
-SettingsStack.navigationOptions = {
+AchievementsStack.navigationOptions = {
   tabBarLabel: 'Achievements',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -72,5 +72,5 @@ export default createBottomTabNavigator({
   TodoStack,
   FocusStack,
   PomodoroStack,
-  SettingsStack,
+  AchievementsStack,
 });
