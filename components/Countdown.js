@@ -61,7 +61,7 @@ export class Countdown extends Component {
         secLeft = this.addZero(0)
         minLeft = this.addZero(this.state.min)
       }
-      
+
       let progress = (now - this.state.startTime) / (this.state.endDate-this.state.startTime) * 100
       this.handleProgress(progress)
 
@@ -73,7 +73,7 @@ export class Countdown extends Component {
         this.handleFinished()
         clearInterval(this.interval);  
       }
-    }, 10);
+    }, 20);
   }
 
   render() {
