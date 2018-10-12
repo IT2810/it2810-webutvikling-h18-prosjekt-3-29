@@ -82,7 +82,7 @@ export default class TodosContainer extends React.Component {
       })
     }
     else {
-      Alert.alert("You already have this todo! Change it, so that you can keep them apart <3");
+      Alert.alert("You already have this todo!");
     }
 
   }
