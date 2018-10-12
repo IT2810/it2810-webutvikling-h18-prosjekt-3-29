@@ -24,7 +24,7 @@ export default class TodoElement extends React.Component {
     return (
       <View>
         <ListItem>
-          <CheckBox
+          <CheckBox style={styles.checkBox}
             center
             title='Todo'
             checked={this.state.checked}
@@ -34,9 +34,13 @@ export default class TodoElement extends React.Component {
             <Text>{this.props.text}</Text>
           </Body>
         </ListItem>
-
-
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  checkBox: {
+    marginRight: 17,
+  },
+});
