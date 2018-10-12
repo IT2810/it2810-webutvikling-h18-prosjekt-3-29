@@ -31,7 +31,7 @@ export default class TodoElement extends React.Component {
             onPress={this.checkBoxChecked}
           />
           <Body>
-            <Text>{this.props.text}</Text>
+            <Text  style={styles.checkBoxText}>{this.props.text}</Text>
           </Body>
         </ListItem>
       </View>
@@ -42,5 +42,11 @@ export default class TodoElement extends React.Component {
 const styles = StyleSheet.create({
   checkBox: {
     marginRight: 17,
+    borderColor: 'gray',
+    height: 25,
+    width: 25,
   },
+  checkBoxText: {
+    fontSize: 18,
+  }
 });
