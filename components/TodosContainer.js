@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Alert,
   View,
   AsyncStorage
 } from 'react-native';
@@ -74,9 +75,16 @@ export default class TodosContainer extends React.Component {
   }
 
   addNewTodo = (txt) => {
-    this.setState({
-      todos: [...this.state.todos, txt]
-    })
+    let list = this.state.todos;
+    if ( !list.includes(txt) ) {
+      this.setState({
+        todos: [...this.state.todos, txt]
+      })
+    }
+    else {
+      Alert.alert("You already have this todo! Change it, so that you can keep them apart <3");
+    }
+
   }
 
   removeTodo = (txt) => {
