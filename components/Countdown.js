@@ -51,11 +51,17 @@ export class Countdown extends Component {
 
     this.setState({startTime : new Date()})
 
-    //Oppdaterer nedtelling-verdier hvert 10. millisekund
+    //Oppdaterer nedtelling-verdier 50 ganger i sekundet, nødvendig for smooth animasjon på korte nedtellinger
     this.interval = setInterval(() => {
       let now = new Date() 
       let minLeft = this.addZero(Math.floor((this.state.endDate - now)/1000/60)); 
-      let secLeft = this.addZero(Math.floor((this.state.endDate - now - minLeft*60*1000)/1000));
+      let secLeft = this.addZero(Math.floor((this.state.endDate - now - minLeft*60*1000)/1000)+1);
+    
+      if (secLeft == 60) {
+        secLeft = this.addZero(0)
+        minLeft = this.addZero(this.state.min)
+      }
+      
       let progress = (now - this.state.startTime) / (this.state.endDate-this.state.startTime) * 100
       this.handleProgress(progress)
 
