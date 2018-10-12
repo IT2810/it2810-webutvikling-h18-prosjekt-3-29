@@ -8,6 +8,7 @@ import {
 import TodosContainer from '../components/TodosContainer';
 
 export default class TodoScreen extends React.Component {
+
   static navigationOptions = {
     header: null,
   };
@@ -18,13 +19,13 @@ export default class TodoScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.todoContainer}>
             <Text style={styles.header}>Todo</Text>
-            <TodosContainer />
+            <TodosContainer addFinishedTodosToAsync={this.addFinishedTodosToAsync}/>
           </View>
         </ScrollView>
       </View>
     );
   }
-  
+
 }
 
 const styles = StyleSheet.create({
