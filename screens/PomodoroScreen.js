@@ -64,14 +64,15 @@ export default class PomodoroScreen extends React.Component {
     else if (this.state.startPause == true) { return "pause" }
   }
 
-  //Hvilken timer som skal vises, jobb-timer (25 min) eller pause-timer (5 min)
+  //Hvilken timer som skal vises, jobb-timer (25 min) eller pause-timer (5 min) 
+  //Satt til 25 sekunder og 5 sekunders for demonstrasjon, endre time til 25 og 5 for ekte pomodoro.
   whichTimer() {
     if (this.whereWeAt() == "idle") {
       return (<Text style={styles.countdownIdle}> 25 : 00 </Text>)
     } else if (this.whereWeAt() == "work") {
-      return (<Countdown key="1" type="work" time="0.01" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
+      return (<Countdown key="1" type="work" time="0.4166" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
     } else if (this.whereWeAt() == "pause") {
-      return (<Countdown key="2" type="pause" time="0.0025" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
+      return (<Countdown key="2" type="pause" time="0.08333" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
     }
   }
 
