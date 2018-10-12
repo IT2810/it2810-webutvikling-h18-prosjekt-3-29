@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     left: 0,
     alignItems: 'stretch',
+    marginTop: 30
   },
   buttonText: {
     margin: 2,
