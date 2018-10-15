@@ -6,6 +6,7 @@
 - react-native-maps
 - jest
 - react-native-checkboxes
+- react-native-dialog
 
 
 ### Før første bruk
@@ -29,6 +30,14 @@ Applikasjonen er ment å være en beta-versjon på noe som kunne vært et fullst
 ### Teknologi
 
 Applikasjonen er utviklet med Expo og React Native (Se "Avhengigheter" for fullstendig liste). Alt av data som lagres på enheten lagres via AsyncStorage, som var et prosjektkrav. 
+
+## Valg og løsninger (api og komponenter)
+
+Vi har under utviklingen brukt flere tredjepartsbibliotek som tilbyr ferdig lagde komponenter.
+
+- React-native-dialog: når man fjerner et element i todo, så får man opp en popup hvor man enten på bekrefte eller avbekrefte at man vil fjerne elementet. Til denne popupen har vi brukt react-native-dialog, som gjør tilbyr ferdige komponenter for å kunne lage en slik popup. Vi valgte å bruke denne fordi den tilbyr og dekker all funksjonalitet som vi trenger.
+
+- React-native-checkboxes: vi valgte dette tredjepartsbiblioteket fordi det gjorde det lettere å lage sjekkbokser med tilhørende tekst. 
 
 ### Utviklingsmetode
 
