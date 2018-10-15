@@ -64,15 +64,17 @@ export default class AchievementsScreen extends React.Component {
     render() {
         return(
               <View style={styles.container}>
-                  <Image source={require('../assets/images/achievements.png')}/>
-                  <Text>XP: {this.state.xp}</Text>
-                  <Text>Level : {this.state.level}</Text>
-                  <Text>Percent: {Math.floor(this.state.percent * 100)}%</Text>
-                  <Progress.Bar
+                  <Image style={styles.img} source={require('../assets/images/achievements.png')}/>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.text}>XP: {this.state.xp}</Text>
+                    <Text style={styles.text}>Level : {this.state.level}</Text>
+                    <Text style={styles.text}>Percent: {Math.floor(this.state.percent * 100)}%</Text>
+                  </View>
+                  <Progress.Bar style={styles.progressBar}
                       progress={this.state.percent}
                       animated={true}
                       width={250}
-                      height={10}
+                      height={15}
                   >
                   </Progress.Bar>
 
@@ -93,5 +95,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingTop: 15,
         alignItems: 'center'
+    },
+    img: {
+      marginBottom: 30,
+    },
+    text: {
+      marginBottom: 15,
+      fontSize: 17,
+      marginRight: 60,
+      marginLeft: 60,
+    },
+    progressBar: {
+      marginTop: 15,
     },
 });
