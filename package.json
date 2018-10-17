@@ -10,7 +10,8 @@
     "test": "node_modules/.bin/jest"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": []
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
@@ -26,6 +27,7 @@
     "react-navigation": "^2.16.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "jest-expo": "^30.0.0"
   }
 }
