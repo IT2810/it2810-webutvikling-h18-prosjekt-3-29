@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {
   Alert,
   View,
-  AsyncStorage
+  AsyncStorage,
+  Image,
+  StyleSheet,
+  Text
 } from 'react-native';
 
 import AddTodo from './AddTodo';
@@ -14,17 +17,32 @@ export default class TodosContainer extends React.Component {
     super(props);
     this.state = {
       todos: [],
-      finishedTodos: ''
+      finishedTodos: '',
+      showImg: false
     }
   }
 
   componentDidMount() {
-    this.getNrFinishedTodosFromAsync();
     this.getUnfinishedTodosFromAsync();
+    this.nrOfElementsInTodo();
   }
 
   componentDidUpdate() {
     this.addUnfinishedTodosToAsync();
+  }
+
+  /*if todos are an empty list, show img-placeholder. If not, show todolist*/
+  nrOfElementsInTodo = () => {
+    if (this.state.todos.length == 0) {
+      this.setState({
+        showImg: true
+      })
+    } else {
+      this.setState({
+        showImg: false
+      })
+    }
+    console.log(this.state.todos.length);
   }
 
   /*function for saving unfinished todos from async*/
@@ -75,32 +93,69 @@ export default class TodosContainer extends React.Component {
   }
 
   addNewTodo = (txt) => {
+    //this.nrOfElementsInTodo();
     let list = this.state.todos;
     if ( !list.includes(txt) ) {
       this.setState({
         todos: [...this.state.todos, txt]
+      }, () => {
+        this.nrOfElementsInTodo();
       })
+
     }
     else {
       Alert.alert("You already have this todo!");
     }
+
+    //når du legger til element 2 i lista så kommer bildet?
+    //WHAAAAAAAAAAAAAAAAAAAAT
 
   }
 
   removeTodo = (txt) => {
     this.setState({
       todos: this.state.todos.filter(todo => todo !== txt)
+    }, () => {
+      this.nrOfElementsInTodo();
     });
     /*updates the nr of completed todos in async storage*/
     this.addFinishedTodosToAsync();
+
+
   }
 
   render() {
+    if (this.state.showImg) {
+      content = <View style={styles.imgTextPlaceholder}><Image style={styles.img} source={require('../assets/images/planets.png')}/>
+        <Text style={styles.textPlaceholder}>Yey! You have no todos!</Text></View>;
+    }
+    if(!this.state.showImg) {
+      content = <View>
+      <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/></View>
+    }
+
     return (
       <View>
-        <AddTodo addNewTodo={this.addNewTodo} />
-        <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/>
+      <AddTodo addNewTodo={this.addNewTodo} />
+        {content}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  img: {
+    height: 175,
+    width: 175,
+    marginTop: 120,
+    opacity: 0.6
+  },
+  imgTextPlaceholder: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  textPlaceholder: {
+    marginTop: 20,
+    opacity: 0.9
+  }
+});

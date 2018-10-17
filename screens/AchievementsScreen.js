@@ -113,6 +113,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   scrollView: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#fcfcfc',
   }
 });

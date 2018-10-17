@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
@@ -23,10 +22,12 @@ export default class TodoElement extends React.Component {
     this.setState({ dialogVisible: false });
   }
 
+  /*function for handling popup of confirm-dialog - gets called when a checkbox is checked*/
   showDialog = () => {
     this.setState({ dialogVisible: true });
   };
 
+  /*function for handling popup - hides popup when user selects "cancel"*/
   handleCancel = () => {
     this.setState({ dialogVisible: false });
   };
@@ -47,6 +48,7 @@ export default class TodoElement extends React.Component {
             </Body>
           </ListItem>
         </View>
+        
         <View>
           <Dialog.Container visible={this.state.dialogVisible}>
             <Dialog.Title>Finish todo</Dialog.Title>
@@ -57,6 +59,7 @@ export default class TodoElement extends React.Component {
             <Dialog.Button label="Finish" onPress={this.checkBoxChecked} />
           </Dialog.Container>
         </View>
+
       </View>
     );
   }
@@ -68,8 +71,9 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     height: 25,
     width: 25,
+    backgroundColor: '#fefefe',
   },
   checkBoxText: {
-    fontSize: 18,
+    fontSize: 17,
   }
 });
