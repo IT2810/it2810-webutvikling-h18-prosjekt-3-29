@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Text, StyleSheet} from 'react-native';
 
-export class Countdown extends Component {
+export default class Countdown extends Component {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ export class Countdown extends Component {
 
   //sender progress i prosent til PomodoroScreen, til bruk i ProgressCircle
   handleProgress = (prog) => {
-    this.props.onProgress(prog, this.props.type)
+   this.props.onProgress(prog, this.props.type)
   }
 
   //legger til en null foran tall under 10
