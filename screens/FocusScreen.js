@@ -1,30 +1,9 @@
 import React from 'react';
 import MapView from 'react-native-maps';
-import { Platform, Text, View, StyleSheet, AsyncStorage } from 'react-native';
-import { Constants, Location, Permissions } from 'expo';
+import { Platform, View, StyleSheet, AsyncStorage } from 'react-native';
+import { Location, Permissions } from 'expo';
 import { IntentLauncherAndroid } from 'expo';
-import { PROVIDER_GOOGLE } from 'react-native-maps'
 import MapStyle from './mapStyle.json';
-
-
-/* Common implementation of Haversine Formula */
-function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2-lat1);  // deg2rad below
-  var dLon = deg2rad(lon2-lon1); 
-  var a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Distance in km
-  return d;
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI/180)
-}
 
 export default class FocusScreen extends React.Component {
   state = {
@@ -68,17 +47,18 @@ export default class FocusScreen extends React.Component {
     } 
   };
 
+  /* Save points to Async Storage */
   _saveFocusPointsAsync = async (value) => {
     let points = String(this.state.focusPoints + 1)
       try {
         await AsyncStorage.setItem('focusPoints', points);
         this.setState({focusPoints : parseInt(points)})
       } catch (error) {
-        // Error retrieving data
         console.log(error.message);
       }
     };
 
+    /* Get current point score from Async Storage*/
     _getFocusPointsAsync = async () => {
       try {
         let focusPointsFetched = await AsyncStorage.getItem('focusPoints');
@@ -90,7 +70,6 @@ export default class FocusScreen extends React.Component {
          this.setState({focusPoints : focusPointsFetched})
        }
      } catch (error) {
-       // Error retrieving data
        console.log(error.message);
      }
     }
@@ -122,8 +101,6 @@ export default class FocusScreen extends React.Component {
       alert("You are not at Gløshuagen, get back there and study!")
     } else {
       this._saveFocusPointsAsync();
-      console.log("From async: " + this._getFocusPointsAsync());
-      console.log("From state: "  + this.state.focusPoints)
     }
 
     this.setState({region: {
@@ -136,7 +113,7 @@ export default class FocusScreen extends React.Component {
   };
 
   render() {
-    /* If one wants conditional styles on map based on OS */
+    /* If one wants conditional styles on map based on OS, can be added later */
     let mapStylePlatform = "";
     if (Platform.OS === 'android') {
       mapStylePlatform = MapStyle;
@@ -152,20 +129,29 @@ export default class FocusScreen extends React.Component {
           region={this.state.region}
           showsUserLocation={true}
           followUserLocation={true}>
-         <MapView.Circle
-          center={{
-          latitude: this.state.validLat,
-          longitude: this.state.validLong,
-        }}
-          radius={100}
-          strokeWidth={2}
-          strokeColor="#3399ff"
-          fillColor="rgba(227,210,210,0.5)"
-          />
         </MapView>
       </View>
     );
   }
+}
+
+/* Common implementation of Haversine Formula */
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
 }
 
 const styles = StyleSheet.create({

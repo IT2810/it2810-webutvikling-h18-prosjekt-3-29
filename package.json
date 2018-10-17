@@ -11,7 +11,11 @@
   },
   "jest": {
     "preset": "jest-expo",
-    "transformIgnorePatterns": []
+    "transformIgnorePatterns": [],
+    "testRegex": "./*-test.js$",
+    "setupFiles": [
+      "./test.setup.js"
+    ]
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
