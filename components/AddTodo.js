@@ -53,12 +53,16 @@ const styles = StyleSheet.create({
   inputField: {
     height: 50,
     width: 300,
+    backgroundColor: '#fefefe'
   },
   addSpecificTodoBtn: {
-    backgroundColor: '#ff7096',
+    backgroundColor: '#f95d52',
     bottom: 0,
     height: 30,
+    width: 50,
     margin: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   addTodoContainer: {
     position: 'relative',
@@ -67,6 +71,5 @@ const styles = StyleSheet.create({
     marginTop: 30
   },
   buttonText: {
-    margin: 2,
   }
 });
