@@ -24,7 +24,6 @@ export default class TodosContainer extends React.Component {
 
   componentDidMount() {
     this.getUnfinishedTodosFromAsync();
-    this.nrOfElementsInTodo();
   }
 
   componentDidUpdate() {
@@ -42,7 +41,6 @@ export default class TodosContainer extends React.Component {
         showImg: false
       })
     }
-    console.log(this.state.todos.length);
   }
 
   /*function for saving unfinished todos from async*/
@@ -59,7 +57,7 @@ export default class TodosContainer extends React.Component {
   getUnfinishedTodosFromAsync = async () => {
     try {
       let unfTodos = await AsyncStorage.getItem('unfinishedTodos');
-      this.setState({todos: JSON.parse(unfTodos)});
+      this.setState({todos: JSON.parse(unfTodos)}, () => {this.nrOfElementsInTodo()} );
     } catch (error) {
       console.error(error);
     }
@@ -93,7 +91,6 @@ export default class TodosContainer extends React.Component {
   }
 
   addNewTodo = (txt) => {
-    //this.nrOfElementsInTodo();
     let list = this.state.todos;
     if ( !list.includes(txt) ) {
       this.setState({
@@ -106,10 +103,6 @@ export default class TodosContainer extends React.Component {
     else {
       Alert.alert("You already have this todo!");
     }
-
-    //når du legger til element 2 i lista så kommer bildet?
-    //WHAAAAAAAAAAAAAAAAAAAAT
-
   }
 
   removeTodo = (txt) => {
@@ -120,8 +113,6 @@ export default class TodosContainer extends React.Component {
     });
     /*updates the nr of completed todos in async storage*/
     this.addFinishedTodosToAsync();
-
-
   }
 
   render() {
