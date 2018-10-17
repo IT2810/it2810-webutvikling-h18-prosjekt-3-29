@@ -24,7 +24,8 @@ export default class TodosContainer extends React.Component {
 
   componentDidMount() {
     this.getUnfinishedTodosFromAsync();
-    this.nrOfElementsInTodo();
+    console.log(this.state.todos);
+
   }
 
   componentDidUpdate() {
@@ -59,7 +60,7 @@ export default class TodosContainer extends React.Component {
   getUnfinishedTodosFromAsync = async () => {
     try {
       let unfTodos = await AsyncStorage.getItem('unfinishedTodos');
-      this.setState({todos: JSON.parse(unfTodos)});
+      this.setState({todos: JSON.parse(unfTodos)}, () => {this.nrOfElementsInTodo()} );
     } catch (error) {
       console.error(error);
     }
