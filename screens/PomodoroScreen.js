@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Button, Text, Alert, AsyncStorage, Platform} from 'react-native';
-import { Countdown } from  '../components/Countdown';
+import { View, ScrollView, StyleSheet, Button, Text, Alert, AsyncStorage, Platform,TouchableHighlight,TouchableOpacity } from 'react-native';
+import Countdown from  '../components/Countdown';
 import ProgressCircle from 'react-native-progress-circle'
 import { Icon } from 'expo';
+
+
 
 export default class PomodoroScreen extends React.Component {
   constructor(props) {
@@ -84,14 +86,15 @@ export default class PomodoroScreen extends React.Component {
   //Bestemmer bakgrunnsfarge etter pomodoro-status
   whichBackgroundColor() {
     if (this.whereWeAt() == "idle") {
-      return ('#fff')
+      return ('#f2f2f2')
     } else if (this.whereWeAt() == "work") {
       return ('#fc5849')
     } else if (this.whereWeAt() == "pause") {
       return ('#01FF70')
     }
   }
-
+ /*          <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton} />
+*/
 
   //Hvilken tekst som skal vises
   whichText() {
@@ -100,7 +103,7 @@ export default class PomodoroScreen extends React.Component {
     } else if (this.whereWeAt() == "work") {
       return ('Study')
     } else if (this.whereWeAt() == "pause") {
-      return ('pause')
+      return ('Pause')
     }
   }
 
@@ -108,13 +111,15 @@ export default class PomodoroScreen extends React.Component {
     return (
       <ScrollView style={{backgroundColor : this.whichBackgroundColor()}}>
         <View style={[styles.container, {backgroundColor : this.whichBackgroundColor()}]}>
+        <TouchableHighlight style={ styles.informationIcon } >
           <Icon.Ionicons
-              style={ styles.informationIcon } 
               name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle'}     
               size={40}
               onPress = {() => this.showInfo()}
           />
+          </TouchableHighlight>
           <Text style={this.whereWeAt() == "idle" ? styles.idleHeader : styles.header}>  {this.whichText()}  </Text> 
+          
           <ProgressCircle
               percent={this.state.startPause ? this.state.pauseProgress : this.state.workProgress}
               radius={150}
@@ -125,7 +130,11 @@ export default class PomodoroScreen extends React.Component {
           {this.whichTimer()}
           </ProgressCircle>
           {Platform.OS === "ios" ? null : <Text>{"\n"}</Text>}
-          <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton} />
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor : this.whereWeAt() == "idle" ? '#fc5849' : '#fff'}]}
+            onPress={this.toggleButton}>
+            <Text> {this.state.startWork ? "stop" : "start" } </Text>
+          </TouchableOpacity>
           <Text style={this.whereWeAt() == "idle" ? styles.idleText : styles.text }>{"\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
         </View>
       </ScrollView>
@@ -212,5 +221,16 @@ const styles = StyleSheet.create({
   },
   progressCircle: {
     marginBottom: 50, 
+  },
+  button: {
+    marginTop: 10,
+    borderWidth:1,
+    borderColor:'rgba(0,0,0,0.2)',
+    alignItems:'center',
+    justifyContent:'center',
+    width:50,
+    height:50,
+    borderRadius:100,
+    marginBottom: -15,
   }
 });
