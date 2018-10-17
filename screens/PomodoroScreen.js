@@ -1,25 +1,87 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Button, Text, Alert, AsyncStorage, Platform} from 'react-native';
-import { Countdown } from  '../components/Countdown';
+import { View, ScrollView, StyleSheet, Button, Text, Alert, AsyncStorage, Platform,TouchableHighlight,TouchableOpacity } from 'react-native';
+import Countdown from  '../components/Countdown';
 import ProgressCircle from 'react-native-progress-circle'
 import { Icon } from 'expo';
 
 export default class PomodoroScreen extends React.Component {
-  constructor(props) {
-    super(props);
+  
+  state = {
+    //Satt til kort varighet for demonstrasjonens skyld, endre til 25 og 5 for riktig.
+    workTime : 0.4166,
+    pauseTime : 0.08333,
 
-    this.state = {
-      finishedPomodoros : '',
-      startWork : false,
-      startPause : false,
-      workProgress : 0,
-      pauseProgress : 0,
-    }
+    finishedPomodoros : '',
+    startWork : false,
+    startPause : false,
+    countDownProgress : 0,
+    backgroundColor : "#fff",
+    text : '',
+    textColor : '#4b4b4b',
+    countdownSettings : [0, 'idle', '25'],
   }
 
   static navigationOptions = {
     title: 'Pomodoro',
   };
+
+  updateStates = (type) => {
+    this.setState ({
+    countDownProgress : 0,
+      })
+    
+    if (type == "idle") {
+      this.setState ({
+        backgroundColor : '#fff',
+        textColor : '#4b4b4b',
+        text : '',
+        startWork : false,
+        startPause : false,
+        countdownSettings : [0, 'idle', '25']
+      })
+    } else if (type == "work") {
+      this.setState({
+        backgroundColor : '#fc5849',
+        textColor : '#fff',
+        text : 'Study',
+        startWork : true,
+        countdownSettings : [1, 'work', this.state.workTime]
+      })
+    } else if (type == 'pause') {
+      this.setState ({
+        backgroundColor : '#01FF70',
+        textColor : '#fff',
+        text : 'Pause',
+        startPause : true,
+        countdownSettings : [2, 'pause', this.state.pauseTime]
+        })
+    }
+  }
+
+  //Skrur av og på Pomodoro og setter relevante states
+  toggleButton = () => {
+    if (this.state.startWork || this.state.startPause ) {
+      this.updateStates("idle");
+    } else {
+      this.updateStates("work")
+    }
+  } 
+
+  //Blir kjørt hvis Countdown sier i fra at nedtellingen er ferdig
+  handleFinished = (type) => {
+    if (type == "work") {
+      this.updateStates("pause")
+    } else if (type == "pause") {
+      this.updateStates("idle")
+      Alert.alert("Pomodoro finished, gz")
+      this._addFinishedPomodoroToAsync();
+    }
+  }
+
+  //Tar i mot progress fra countdown 
+  handleProgress = (progVal) => {
+    this.setState({ countDownProgress : progVal})
+  }
 
   componentDidMount() {
     this._getFinishedPomodorosFromAsync()
@@ -28,118 +90,10 @@ export default class PomodoroScreen extends React.Component {
   showInfo = () => {
     Alert.alert("Pomodoro", "The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by 5 minute breaks. ")
   }
-
-  //Blir kjørt hvis Countdown sier i fra at nedtellingen er ferdig
-  handleFinished = (type) => {
-    if (type == "work") {
-      this.setState({startPause : true})
-      this.setState({workProgress : 0})
-    } else if (type == "pause") {
-      this.setState({startPause : false})
-      this.setState({startWork : false})
-      Alert.alert("Pomodoro finished, gz")
-      this._addFinishedPomodoroToAsync();
-      this.setState({pauseProgress : 0})
-    }
-  }
-
-  //Tar i mot progress fra countdown 
-  handleProgress = (progVal, type) => {
-    if (type == "work") {
-      this.setState({workProgress : progVal})
-    } else if (type == "pause") {
-      this.setState({pauseProgress : progVal})
-    } 
-  }
-
-  //Skrur av og på Pomodoro og setter relevante states
-  toggleButton = () => {
-    this.setState({ startWork : !this.state.startWork})
-    if (this.state.startPause) {
-      this.setState({startPause : false})
-    }
-    this.setState({workProgress : 0})
-    this.setState({pauseProgress : 0})
-  }
-
-  //Hvilken status Pomodoro er på akkurat nå 
-  whereWeAt() {
-    if (this.state.startWork == false && this.state.startPause == false) { return "idle" } 
-    else if (this.state.startWork == true && this.state.startPause == false) { return "work" } 
-    else if (this.state.startPause == true) { return "pause" }
-  }
-
-  //Hvilken timer som skal vises, jobb-timer (25 min) eller pause-timer (5 min) 
-  //Satt til 25 sekunder og 5 sekunders for demonstrasjon, endre time til 25 og 5 for ekte pomodoro.
-  whichTimer() {
-    if (this.whereWeAt() == "idle") {
-      return (<Text style={styles.countdownIdle}> 25 : 00 </Text>)
-    } else if (this.whereWeAt() == "work") {
-      return (<Countdown key="1" type="work" time="0.4166" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
-    } else if (this.whereWeAt() == "pause") {
-      return (<Countdown key="2" type="pause" time="0.08333" onWorkFinished ={this.handleFinished} onProgress={this.handleProgress}/>)
-    }
-  }
-
-  //Bestemmer bakgrunnsfarge etter pomodoro-status
-  whichBackgroundColor() {
-    if (this.whereWeAt() == "idle") {
-      return ('#fff')
-    } else if (this.whereWeAt() == "work") {
-      return ('#fc5849')
-    } else if (this.whereWeAt() == "pause") {
-      return ('#01FF70')
-    }
-  }
-
-
-  //Hvilken tekst som skal vises
-  whichText() {
-    if (this.whereWeAt() == "idle") {
-      return ('')
-    } else if (this.whereWeAt() == "work") {
-      return ('Study')
-    } else if (this.whereWeAt() == "pause") {
-      return ('pause')
-    }
-  }
-
-  render() {
-    return (
-      <ScrollView style={{backgroundColor : this.whichBackgroundColor()}}>
-        <View style={[styles.container, {backgroundColor : this.whichBackgroundColor()}]}>
-          <Icon.Ionicons
-              style={ styles.informationIcon } 
-              name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle'}     
-              size={40}
-              onPress = {() => this.showInfo()}
-          />
-          <Text style={this.whereWeAt() == "idle" ? styles.idleHeader : styles.header}>  {this.whichText()}  </Text> 
-          <ProgressCircle
-              percent={this.state.startPause ? this.state.pauseProgress : this.state.workProgress}
-              radius={150}
-              borderWidth={5}
-              color="#ffffff"
-              shadowColor="#4b4b4b"
-              bgColor={this.whichBackgroundColor()}>
-          {this.whichTimer()}
-          </ProgressCircle>
-          {Platform.OS === "ios" ? null : <Text>{"\n"}</Text>}
-          <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton} />
-          <Text style={this.whereWeAt() == "idle" ? styles.idleText : styles.text }>{"\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
-        </View>
-      </ScrollView>
-    );
-  }
-
-
-
-  //funksjoner for get og set av async-item
   
+  //Pomodoros i async += 1
   _addFinishedPomodoroToAsync = async () => {
-
-    let counter = String(this.state.finishedPomodoros + 1)
-
+    let counter = String(this.state.finishedPomodoros+1)
     try {
       await AsyncStorage.setItem('pomodoroCounter', counter);
       this.setState({finishedPomodoros : parseInt(counter)})
@@ -147,9 +101,9 @@ export default class PomodoroScreen extends React.Component {
       // Error retrieving data
       console.log(error.message);
     }
-      
   }
 
+  //Henter fullførte pomodoros fra async
   _getFinishedPomodorosFromAsync = async () => {
     try {
       let donePomodoros = await AsyncStorage.getItem('pomodoroCounter');
@@ -165,6 +119,49 @@ export default class PomodoroScreen extends React.Component {
      console.log(error.message);
    }
   }
+
+  render() {
+    return (
+      <ScrollView style={{backgroundColor : this.state.backgroundColor}}>
+        <View style={styles.container}>
+
+        <TouchableHighlight style={ styles.informationIcon } >
+          <Icon.Ionicons
+              color = {this.state.textColor}
+              name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle'}     
+              size={40}
+              onPress = {() => this.showInfo()}
+          />
+          </TouchableHighlight>
+
+          <Text style={styles.header}> {this.state.text}  </Text> 
+          
+          <ProgressCircle
+            percent={this.state.countDownProgress}
+            radius={150}
+            borderWidth={5}
+            color="#fff"
+            shadowColor="#4b4b4b"
+            bgColor={this.state.backgroundColor}
+          >
+            <Countdown 
+              key={this.state.countdownSettings[0]} 
+              type={this.state.countdownSettings[1]} 
+              time={this.state.countdownSettings[2]} 
+              textColor = {this.state.textColor} 
+              onWorkFinished ={this.handleFinished} 
+              onProgress={this.handleProgress}
+            />
+          </ProgressCircle>
+
+          {Platform.OS === "ios" ? null : <Text>{"\n"}</Text>}
+          <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton} />
+          <Text style={{ color : this.state.textColor,}}>{"\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
+        
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 
@@ -176,41 +173,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
-  scrollContainer: {
-    backgroundColor: '#fff',
-  },
   informationIcon: {
     position: 'absolute',
     right: 10,
     top: 10,
-  },
-  workColor: {
-    backgroundColor: '#FF4136',
-  },
-  pauseColor: {
-    backgroundColor: '#01FF70',
-  },
-  idleHeader: {
-    color: '#4b4b4b',
-    fontSize: 30,
-    marginBottom: 10,
   },
   header: {
     color: 'white',
     fontSize: 30,
     marginBottom: 10,
   },
-  idleText: {
-    color:'#4b4b4b',
-  },
-  text: {
-    color: 'white',
-  },
-  countdownIdle: {
-    color: '#4b4b4b',
-    fontSize: 30,
-  },
-  progressCircle: {
-    marginBottom: 50, 
-  }
 });

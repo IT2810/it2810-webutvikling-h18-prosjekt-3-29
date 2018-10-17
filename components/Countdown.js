@@ -21,7 +21,7 @@ export default class Countdown extends Component {
 
   //sender progress i prosent til PomodoroScreen, til bruk i ProgressCircle
   handleProgress = (prog) => {
-   this.props.onProgress(prog, this.props.type)
+   this.props.onProgress(prog)
   }
 
   //legger til en null foran tall under 10
@@ -41,7 +41,7 @@ export default class Countdown extends Component {
   componentDidMount() {
 
     //Setter startverdier med en gang, siden state bruker litt lang tid
-    if (this.props.type == "work") {
+    if (this.props.type == "work" || this.props.type == "idle") {
       this.setState({min: "25"})
     }
     else if (this.props.type == "pause") {
@@ -52,40 +52,35 @@ export default class Countdown extends Component {
     this.setState({startTime : new Date()})
 
     //Oppdaterer nedtelling-verdier 50 ganger i sekundet, nødvendig for smooth animasjon på korte nedtellinger
-    this.interval = setInterval(() => {
-      let now = new Date() 
-      let minLeft = this.addZero(Math.floor((this.state.endDate - now)/1000/60)); 
-      let secLeft = this.addZero(Math.floor((this.state.endDate - now - minLeft*60*1000)/1000)+1);
-    
-      if (secLeft == 60) {
-        secLeft = this.addZero(0)
-        minLeft = this.addZero(this.state.min)
-      }
+    if (this.props.type != "idle") {
+      this.interval = setInterval(() => {
+        let now = new Date() 
+        let minLeft = this.addZero(Math.floor((this.state.endDate - now)/1000/60)); 
+        let secLeft = this.addZero(Math.floor((this.state.endDate - now - minLeft*60*1000)/1000)+1);
+      
+        if (secLeft == 60) {
+          secLeft = this.addZero(0)
+          minLeft = this.addZero(this.state.min)
+        }
 
-      let progress = (now - this.state.startTime) / (this.state.endDate-this.state.startTime) * 100
-      this.handleProgress(progress)
+        let progress = (now - this.state.startTime) / (this.state.endDate-this.state.startTime) * 100
+        this.handleProgress(progress)
 
-      this.setState ({min: minLeft})
-      this.setState ({sec: secLeft})
+        this.setState ({min: minLeft})
+        this.setState ({sec: secLeft})
 
-      //Nedtellingen er ferdig, sier i fra til PomodoroScreen og avlsutter intervallet
-      if (this.state.endDate - now < 10) {
-        this.handleFinished()
-        clearInterval(this.interval);  
-      }
-    }, 20);
+        //Nedtellingen er ferdig, sier i fra til PomodoroScreen og avlsutter intervallet
+        if (this.state.endDate - now < 10) {
+          this.handleFinished()
+          clearInterval(this.interval);  
+        }
+      }, 20);
+    }
   }
 
   render() {
     return (
-        <Text style={styles.countdown}> {this.state.min} : {this.state.sec} </Text>
+        <Text style={{fontSize : 30, color : this.props.textColor}}> {this.state.min} : {this.state.sec} </Text>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  countdown: {
-    color: 'white',
-    fontSize: 30,
-  },
-});
