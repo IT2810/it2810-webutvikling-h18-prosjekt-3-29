@@ -10,13 +10,9 @@
 - react-native-progress
 - native-base
 
-
-
 ### Før første bruk
 
 For at kartet skal fungere korrekt på Android-telefonener, skru på Lokasjonstjenester og sett dem til "høy nøyaktighet" under Innstillinger -> Tilkoblinger -> Posisjon. Applikasjonen vil spørre alle enheter om tillatelse til å bruke plasseringstjenester, men for Android 6 er det nødvendig å aktivere `LocationServices`i tillegg. Det er lagt inn en sjekk for dette i kildekoden, og applikasjonen skal i utgangspunktet også legge til denne tilgangen på egen hånd, men dette har vist seg ikke alltid å fungere. 
-
-
 
 ## Funksjonalitet
 
@@ -59,13 +55,30 @@ Vi har utviklet applikasjonen ved hjelp av issue-tracking på Github. Siden pros
 
 Vi har brukt issues på github for oversikt over arbeid og oppgaver, og vi har utarbeidet issues i fellesskap. Det vil si at alle hadde en felles forståelse av hva som inngikk i hvert issue. 
 
-## Gruppas valg av teknologi
+## Gruppas valg av teknologi (Tutorial)
 
-*her skal det være tutorial*
+For å tilfredsstille kravet om å løse et problem utenfor normal "react-native"-problematikk har vi valgt å implementere en feature som tar i bruk Google Maps (via `react-native-maps`). Tanken er at applikasjonen henter brukerens posisjon, og hvis brukeren befinner seg mindre enn x meter fra en valgt lokasjon (feks Gløshaugen) blir det gitt poeng - som vises i `AchievementsScreen.js`. Er brukeren lengre enn x meter unna lokasjonen vil vedkommende få beskjed om å komme seg tilbake for å få poeng. Dette er ment å motivere brukeren til å være lengre på skolen - og dermed få flere poeng. 
+
+### Tutorial for applikasjoner som ønsker å bruke `react-native-maps` på lignende måte
+
+Det første man trenger å gjøre er å installere `react-native-maps`-modulen i prosjektet sitt. Dette kan gjøres i `package.json` ved å legge til `"react-native-maps": "^0.21.0",` under "Dependencies" (etterfulgt av `npm install`). 
 
 ## Testing
 
-Prosjektet har blitt enhetstestet ved hjelp av testrammeverket Jest. For å kjøre testbatteriet, åpne en terminal i prosjektets rotmappe og kjør `npm test`. 
+Prosjektet har blitt enhetstestet ved hjelp av testrammeverket Jest. 
+
+For å kjøre testene må du;
+- Sjekke at du har jest installert globalt på maskinen din (`npm i  jest-cli --global`)
+- Åpne et terminalvindu i prosjektets rotmappe
+- kjøre kommandoen `jest` eller evt `jest-coverage`
+
+### Om testingen som er gjort i prosjektet
+
+Siden det kun har blitt benyttet Jest som testrammeverk (og ikke feks enzyme i tillegg) er det begrenset hva man får testet. De filene som ikke har blitt enhetstestet har blitt ignorert pga bruk av tredjepartiskomponenter som det ikke kan opprettes mock for (feks react-native-progress). For filer som har benyttet andre og mer "mock-vennlige" rammeverk har vi satt opp en mock-fil som initaliserer alle nødvendige mocks i det jest starter. Dette blir gjort i `test.setup.js` og `package.json`. 
+
+I tillegg til å teste render-metoden til komponentene (via snapshots), tester vi også blant annet at AsyncStorage fungerer generelt (feks i `FocusScreen-test.js`) og at metodene vi bruker for lagring i AsyncStorage er konsistente og korrekte (feks i `PomodoroScreen-test.js`). 
+
+
 
 
 
