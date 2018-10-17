@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Button, Text, Alert, AsyncStorage, Image} from 'react-native';
+import { View, StyleSheet, Text, AsyncStorage, Image} from 'react-native';
 import { NavigationEvents } from "react-navigation";
 import * as Progress from 'react-native-progress';
 
