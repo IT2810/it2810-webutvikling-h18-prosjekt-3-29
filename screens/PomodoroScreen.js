@@ -8,8 +8,8 @@ export default class PomodoroScreen extends React.Component {
   
   state = {
     //Satt til kort varighet for demonstrasjonens skyld, endre til 25 og 5 for riktig.
-    workTime : 0.04166,
-    pauseTime : 0.008333,
+    workTime : 0.4166,
+    pauseTime : 0.08333,
 
     finishedPomodoros : '',
     startWork : false,
