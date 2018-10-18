@@ -68,4 +68,10 @@ Vi har brukt issues på github for oversikt over arbeid og oppgaver, og vi har u
 Prosjektet har blitt enhetstestet ved hjelp av testrammeverket Jest. For å kjøre testbatteriet, åpne en terminal i prosjektets rotmappe og kjør `npm test`. 
 
 
+## Credits
+
+Icon of planets on todo page:
+Icon made by Freepik from www.flaticon.com 
+
+
 
