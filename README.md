@@ -69,7 +69,8 @@ Uavhengig av hva slags funksjonalitet man ønsker å tillegge kartet så er det 
 
 for android 6 kan det i tillegg være nødvendig å spørre etter flere tilganger (feks slik);
 
-`_checkProviderAsync = async () => {
+`
+_checkProviderAsync = async () => {
 
     let {status } = await Expo.Location.getProviderStatusAsync();
 
@@ -81,7 +82,7 @@ for android 6 kan det i tillegg være nødvendig å spørre etter flere tilgange
 
         ); 
     } 
-    
+
   };`
 
 For å rendere kartet må man lage en `<MapView>`-komponent, denne kan ha en del ulike attributter som påvirker oppførselen til kartet, feks: 
