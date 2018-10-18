@@ -49,6 +49,8 @@ Vi har under utviklingen brukt flere tredjepartskomponenter og rammeverk. Dette 
 
 - React-native-maps: tredjepartskomponenter som tilbyr komponenter til kart. Vi valgte å bruke disse tredjepartskomponentene fordi det ville spare oss for veldig mye jobb på kartet. React-native-maps dekket det meste av funksjonalitet vi krevde, derfor falt valget på akkurat dette. 
 
+- React-native-progress: vi valgte å bruke disse tredjepartskomponentene fordi det sparte oss for mye jobb. I tillegg var stylingen langt lettere med å bruke denne pakken med tredjepartskomponenten, siden det var allerede definerte attributter som du enkelt kunne bruke for å få et fint utseende på progressbaren din. 
+
 ### Utviklingsmetode
 
 Vi har utviklet applikasjonen ved hjelp av issue-tracking på Github. Siden prosjektet hadde kort varighet var det nødvendig med hyppige møter, og vi har hatt totalt 8 programmeringsøkter i fellesskap. I tillegg til dette har vi kontinuerlig holdt kontakten via gruppens kommunikasjonskanal. Alle commits har blitt knyttet til Issues, og vi har på den måten utviklet en hierarkisk struktur over hele utviklingsløpet. Arbeidsfordelingen har vært jevn, da vi primært har hatt ansvaret for hver vår kjernefunksjonalitet. 
