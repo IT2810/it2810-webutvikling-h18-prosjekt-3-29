@@ -55,13 +55,41 @@ Vi har utviklet applikasjonen ved hjelp av issue-tracking på Github. Siden pros
 
 Vi har brukt issues på github for oversikt over arbeid og oppgaver, og vi har utarbeidet issues i fellesskap. Det vil si at alle hadde en felles forståelse av hva som inngikk i hvert issue. 
 
-## Gruppas valg av teknologi (Tutorial)
+## Gruppas valg av teknologi
 
 For å tilfredsstille kravet om å løse et problem utenfor normal "react-native"-problematikk har vi valgt å implementere en feature som tar i bruk Google Maps (via `react-native-maps`). Tanken er at applikasjonen henter brukerens posisjon, og hvis brukeren befinner seg mindre enn x meter fra en valgt lokasjon (feks Gløshaugen) blir det gitt poeng - som vises i `AchievementsScreen.js`. Er brukeren lengre enn x meter unna lokasjonen vil vedkommende få beskjed om å komme seg tilbake for å få poeng. Dette er ment å motivere brukeren til å være lengre på skolen - og dermed få flere poeng. 
 
 ### Tutorial for applikasjoner som ønsker å bruke `react-native-maps` på lignende måte
 
 Det første man trenger å gjøre er å installere `react-native-maps`-modulen i prosjektet sitt. Dette kan gjøres i `package.json` ved å legge til `"react-native-maps": "^0.21.0",` under "Dependencies" (etterfulgt av `npm install`). 
+
+Uavhengig av hva slags funksjonalitet man ønsker å tillegge kartet så er det nødvendig å spørre enheten som kjører appen om tillatelse til å benytte enhetens lokasjonstjenester. Dette kan feks gjøres ved et asynkront kall;
+
+`await Permissions.askAsync(Permissions.LOCATION);`
+
+for android 6 kan det i tillegg være nødvendig å spørre etter flere tilganger (feks slik);
+
+`_checkProviderAsync = async () => {
+    let {status } = await Expo.Location.getProviderStatusAsync();
+    if(status.locationServicesEnabled === 'false' || status.gpsAvailable === 'false'){
+        IntentLauncherAndroid.startActivityAsync(
+          IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
+        ); 
+    } 
+  };`
+
+For å rendere kartet må man lage en `<MapView>`-komponent, denne kan ha en del ulike attributter som påvirker oppførselen til kartet, feks: 
+
+`style={}, region={}, followUserLocation={}, showsUserLocation={}`
+
+Ønsker man å finne brukerens lokasjon kan man gjøre dette via Location Api'et:
+
+`let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});`
+
+I vår applikasjon regner vi ut distansen mellom brukerens posisjon og et gitt mål på kartet. Siden jordkloden ikke er en perfekt kule, ei eller en perfekt ellipse, kan dette være vanskelig å gjøre nøyaktig. Vi valgte å kalkulere distansen i meter ved å bruke Haversines Formula. 
+
+<img width="252" alt="erreafres" src="https://user-images.githubusercontent.com/2789198/27240436-e9a459da-52d4-11e7-8f84-f96d0b312859.png">
+
 
 ## Testing
 
@@ -70,7 +98,7 @@ Prosjektet har blitt enhetstestet ved hjelp av testrammeverket Jest.
 For å kjøre testene må du;
 - Sjekke at du har jest installert globalt på maskinen din (`npm i  jest-cli --global`)
 - Åpne et terminalvindu i prosjektets rotmappe
-- kjøre kommandoen `jest` eller evt `jest-coverage`
+- kjøre kommandoen `jest` eller evt `jest --coverage`
 
 ### Om testingen som er gjort i prosjektet
 
