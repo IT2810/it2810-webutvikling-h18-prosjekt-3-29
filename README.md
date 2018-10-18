@@ -47,11 +47,11 @@ Vi har under utviklingen brukt flere tredjepartskomponenter og rammeverk. Dette 
 
 - native-base: dette er et rammeverk som gjør stylingen enklere ved at det tilbyr komponenter og stylingattributter som er universell for både iOS og Andriod. Dette vil si at vi kunne bruke de samme komponentene og stylingen på elementer uten å være bekymret for om den ikke er kompitabel med alle krevde enheter. 
 
-- React-native-maps: 
+- React-native-maps: tredjepartskomponenter som tilbyr komponenter til kart. Vi valgte å bruke disse tredjepartskomponentene fordi det ville spare oss for veldig mye jobb på kartet. React-native-maps dekket det meste av funksjonalitet vi krevde, derfor falt valget på akkurat dette. 
 
 ### Utviklingsmetode
 
-Vi har utviklet applikasjonen ved hjelp av issue-tracking på Github. Siden prosjektet hadde kort varighet var det nødvendig med hyppige møter, og vi har hatt totalt Y programmeringsøkter i fellesskap. I tillegg til dette har vi kontinuerlig holdt kontakten via gruppens kommunikasjonskanal. Alle commits har blitt knyttet til Issues, og vi har på den måten utviklet en hierarkisk struktur over hele utviklingsløpet. Arbeidsfordelingen har vært jevn, da vi primært har hatt ansvaret for hver vår kjernefunksjonalitet. 
+Vi har utviklet applikasjonen ved hjelp av issue-tracking på Github. Siden prosjektet hadde kort varighet var det nødvendig med hyppige møter, og vi har hatt totalt 8 programmeringsøkter i fellesskap. I tillegg til dette har vi kontinuerlig holdt kontakten via gruppens kommunikasjonskanal. Alle commits har blitt knyttet til Issues, og vi har på den måten utviklet en hierarkisk struktur over hele utviklingsløpet. Arbeidsfordelingen har vært jevn, da vi primært har hatt ansvaret for hver vår kjernefunksjonalitet. 
 
 Vi har brukt issues på github for oversikt over arbeid og oppgaver, og vi har utarbeidet issues i fellesskap. Det vil si at alle hadde en felles forståelse av hva som inngikk i hvert issue. 
 
