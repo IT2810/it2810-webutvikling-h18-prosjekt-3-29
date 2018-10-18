@@ -70,20 +70,21 @@ Uavhengig av hva slags funksjonalitet man ønsker å tillegge kartet så er det 
 for android 6 kan det i tillegg være nødvendig å spørre etter flere tilganger (feks slik);
 
 `
-_checkProviderAsync = async () => {
+    _checkProviderAsync = async () => {
 
-    let {status } = await Expo.Location.getProviderStatusAsync();
+        let {status } = await Expo.Location.getProviderStatusAsync();
 
-    if(status.locationServicesEnabled === 'false' || status.gpsAvailable === 'false'){
+     if(status.locationServicesEnabled === 'false' || status.gpsAvailable === 'false'){
 
-        IntentLauncherAndroid.startActivityAsync(
+         IntentLauncherAndroid.startActivityAsync(
 
-          IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
+           IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
 
-        ); 
-    } 
+         ); 
+        } 
 
-  };`
+    };
+`
 
 For å rendere kartet må man lage en `<MapView>`-komponent, denne kan ha en del ulike attributter som påvirker oppførselen til kartet, feks: 
 
