@@ -18,7 +18,7 @@ For at kartet skal fungere korrekt på Android-telefonener, skru på Lokasjonstj
 
 Applikasjonen er ment å være en Personal Information Manager for studenter. Alle funksjonene i applikasjonen er utformet som et spill, i håp om at dette formatet øker motivasjonen til å konsentrere seg om studiene. Følgende funksjonalitet er implementert;
 
-- Pomodoro : En spesialstoppeklokke basert på Pomodoroprinsippet. Denne funksjonaliteten er en form for intervall: du har 25 minutter hvor du skal for eksempel lese, og så 5 minutter pause. For hver pomodorosykel får man poeng (exp). 
+- Pomodoro : En spesialstoppeklokke basert på Pomodoroprinsippet. Denne funksjonaliteten er en form for intervall: du skal ha 25 minutter hvor du skal for eksempel lese, og så 5 minutter pause. I betaversjonen vår har vi satt det til å være 25 sekunder og 5 sekunder, slik at de som tester slipper å vente så lenge. For hver pomodorosykel får man poeng (exp). 
 
 - TodoList : En huskeliste som lar deg lage, slette og huke av gjøremål i form av checkboxes. For hvert fullførte gjøremål blir man tildelt poeng (exp) 
 
@@ -86,19 +86,23 @@ I vår applikasjon regner vi ut distansen mellom brukerens posisjon og et gitt m
 
 Prosjektet har blitt enhetstestet ved hjelp av testrammeverket Jest. 
 
-For å kjøre testene må du;
+For å kjøre testene må du:
 - Sjekke at du har jest installert globalt på maskinen din (`npm i  jest-cli --global`)
 - Åpne et terminalvindu i prosjektets rotmappe
 - kjøre kommandoen `jest` eller evt `jest --coverage`
 
 ### Om testingen som er gjort i prosjektet
 
-Siden det kun har blitt benyttet Jest som testrammeverk (og ikke feks enzyme i tillegg) er det begrenset hva man får testet. De filene som ikke har blitt enhetstestet har blitt ignorert pga bruk av tredjepartiskomponenter som det ikke kan opprettes mock for (feks react-native-progress). For filer som har benyttet andre og mer "mock-vennlige" rammeverk har vi satt opp en mock-fil som initaliserer alle nødvendige mocks i det jest starter. Dette blir gjort i `test.setup.js` og `package.json`. 
+Siden det kun har blitt benyttet Jest som testrammeverk (og ikke feks enzyme i tillegg) er det begrenset hva man får testet. De filene som ikke har blitt enhetstestet har blitt utelatt pga bruk av tredjepartiskomponenter som det ikke kan opprettes mock for (feks react-native-progress). For filer som har benyttet andre og mer "mock-vennlige" rammeverk har vi satt opp en mock-fil som initaliserer alle nødvendige mocks i det jest starter. Dette blir gjort i `test.setup.js` og `package.json`. 
 
-I tillegg til å teste render-metoden til komponentene (via snapshots), tester vi også blant annet at AsyncStorage fungerer generelt (feks i `FocusScreen-test.js`) og at metodene vi bruker for lagring i AsyncStorage er konsistente og korrekte (feks i `PomodoroScreen-test.js`). 
+I tillegg til å teste render-metoden til komponentene via snapshots, tester vi også blant annet at AsyncStorage fungerer generelt (feks i `FocusScreen-test.js`) og at metodene vi bruker for lagring i AsyncStorage er konsistente og korrekte (feks i `PomodoroScreen-test.js`). Siden metodene vi bruker for lagring til Async Storage er relativt like, har vi kun testet dette i `PomodoroScreen-test.js`. Vi tester heller ikke at selve Async Sotrage fungerer, da dette er testet av utviklerne av nettopp Async Storage. Vår oppgave var å teste om implementasjonen av nevnte modul fungerer, og at det vi lagrer og henter fra Async er korrekt. 
 
+### Systematisk tilnærming til testing
 
-
+- Vi har utviklet snapshot-tester til nærmest alle komponentene våre (se punkt over) for å sikre korrekt rendering
+- Vi tester at lagringsfunksjonaliteten vi har utviklet fungerer korrekt
+- Vi har kontinuerlig kjørt interaksjonstester på flere mobile enheter (IPhone, Android)
+- Vi har brukertestet applikasjonen på medstudenter. 
 
 ## Credits
 
