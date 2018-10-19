@@ -7,7 +7,6 @@ import {
 import { Input, Button, Item } from 'native-base';
 
 export default class AddTodo extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +36,7 @@ export default class AddTodo extends React.Component {
             />
             <Button rounded onPress={this.addNewTodo}
              style={styles.addSpecificTodoBtn}
-           >
+            >
              <Text style={styles.buttonText}>Add!</Text>
            </Button>
           </Item>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Button, Text, Alert, AsyncStorage, Platform,TouchableHighlight,TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, Button, Text, Alert, AsyncStorage, Platform,TouchableHighlight } from 'react-native';
 import Countdown from  '../components/Countdown';
 import ProgressCircle from 'react-native-progress-circle'
 import { Icon } from 'expo';
@@ -8,14 +8,14 @@ export default class PomodoroScreen extends React.Component {
   
   state = {
     //Satt til kort varighet for demonstrasjonens skyld, endre til 25 og 5 for riktig.
-    workTime : 0.4166,
-    pauseTime : 0.08333,
+    workTime : 0.25,
+    pauseTime : 0.05,
 
     finishedPomodoros : '',
     startWork : false,
     startPause : false,
     countDownProgress : 0,
-    backgroundColor : "#fff",
+    backgroundColor : '#fff',
     text : '',
     textColor : '#4b4b4b',
     countdownSettings : [0, 'idle', '25'],
@@ -26,11 +26,9 @@ export default class PomodoroScreen extends React.Component {
   };
 
   updateStates = (type) => {
-    this.setState ({
-    countDownProgress : 0,
-      })
+    this.setState ({ countDownProgress : 0 })
     
-    if (type == "idle") {
+    if (type == 'idle') {
       this.setState ({
         backgroundColor : '#fff',
         textColor : '#4b4b4b',
@@ -38,16 +36,16 @@ export default class PomodoroScreen extends React.Component {
         startWork : false,
         startPause : false,
         countdownSettings : [0, 'idle', '25']
-      })
-    } else if (type == "work") {
+      })}
+    else if (type == 'work') {
       this.setState({
         backgroundColor : '#fc5849',
         textColor : '#fff',
         text : 'Study',
         startWork : true,
         countdownSettings : [1, 'work', this.state.workTime]
-      })
-    } else if (type == 'pause') {
+      })} 
+    else if (type == 'pause') {
       this.setState ({
         backgroundColor : '#01FF70',
         textColor : '#fff',
@@ -61,20 +59,21 @@ export default class PomodoroScreen extends React.Component {
   //Skrur av og på Pomodoro og setter relevante states
   toggleButton = () => {
     if (this.state.startWork || this.state.startPause ) {
-      this.updateStates("idle");
+      this.updateStates('idle');
     } else {
-      this.updateStates("work")
+      this.updateStates('work')
     }
   } 
 
   //Blir kjørt hvis Countdown sier i fra at nedtellingen er ferdig
   handleFinished = (type) => {
-    if (type == "work") {
-      this.updateStates("pause")
-    } else if (type == "pause") {
-      this.updateStates("idle")
-      Alert.alert("Pomodoro finished, gz")
-      this._addFinishedPomodoroToAsync();
+    if (type == 'work') {
+      this.updateStates('pause')
+    } else if (type == 'pause') {
+      this.updateStates('idle')
+      Alert.alert('Pomodoro finished, gz')
+      console.log(this.state.finishedPomodoros)
+      this._setFinishedPomodorosAsyncAndState(this.state.finishedPomodoros+1)
     }
   }
 
@@ -88,15 +87,14 @@ export default class PomodoroScreen extends React.Component {
   }
 
   showInfo = () => {
-    Alert.alert("Pomodoro", "The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by 5 minute breaks. ")
+    Alert.alert('Pomodoro', 'The pomodoro technique is a time management method based on 25-minute stretches of focused work broken by 5 minute breaks. ')
   }
   
   //Pomodoros i async += 1
-  _addFinishedPomodoroToAsync = async () => {
-    let counter = String(this.state.finishedPomodoros+1)
+  _setFinishedPomodorosAsyncAndState = async (poms) => {
     try {
-      await AsyncStorage.setItem('pomodoroCounter', counter);
-      this.setState({finishedPomodoros : parseInt(counter)})
+      await AsyncStorage.setItem('pomodoroCounter', String(poms));
+      this.setState({finishedPomodoros : parseInt(poms)})
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -140,8 +138,8 @@ export default class PomodoroScreen extends React.Component {
             percent={this.state.countDownProgress}
             radius={150}
             borderWidth={5}
-            color="#fff"
-            shadowColor="#4b4b4b"
+            color='#fff'
+            shadowColor='#4b4b4b'
             bgColor={this.state.backgroundColor}
           >
             <Countdown 
@@ -154,10 +152,9 @@ export default class PomodoroScreen extends React.Component {
             />
           </ProgressCircle>
 
-          {Platform.OS === "ios" ? null : <Text>{"\n"}</Text>}
-          <Button title={this.state.startWork ? "stop" : "start" } onPress={this.toggleButton} />
-          <Text style={{ color : this.state.textColor,}}>{"\n\n"} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
-        
+          {Platform.OS === 'ios' ? null : <Text>{'\n'}</Text>}
+          <Button title={this.state.startWork ? 'stop' : 'start' } onPress={this.toggleButton} />
+          <Text style={{ color : this.state.textColor,}}>{'\n\n'} Finished Pomodoros : {this.state.finishedPomodoros} </Text> 
         </View>
       </ScrollView>
     );

@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
+import TodoElement from './TodoElement';
 import {
-  AsyncStorage,
   StyleSheet,
   View,
 } from 'react-native';
 
-import TodoElement from './TodoElement';
-
-export default class TodoElementsContainer extends React.Component {
-
+export default class TodoElementsContainer extends Component {
   constructor(props) {
     super(props);
   }
@@ -20,7 +17,7 @@ export default class TodoElementsContainer extends React.Component {
   render() {
     return (
       <View style={styles.todos}>
-        {/*her går vi gjennom lista som ble sendt ned fra todoscontainer, og legger dem til i viewet.*/}
+        {/*Loop trough the list that is passed down from todoscontainer, and adds it to the view */}
         { this.props.todos.map((todo) => <TodoElement text={todo} removeTodoElement={this.removeTodoElement}/>) }
       </View>
     );
