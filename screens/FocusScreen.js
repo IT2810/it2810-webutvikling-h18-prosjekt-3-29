@@ -16,7 +16,7 @@ export default class FocusScreen extends React.Component {
   
   //Set Title on Page
   static navigationOptions = {
-    title: 'Gløshaugen Focuss',
+    title: 'Gløshaugen Focus',
   };
 
   //If Android device, ask for LocationService permissions, anyhow -> fetch current location
@@ -32,7 +32,7 @@ export default class FocusScreen extends React.Component {
     this._getFocusPointsAsync();
     this.interval = setInterval(() => {
       this._getLocationAsync();
-    }, 10000);
+    }, 60000);
   }
 
     /* For Android 6. we need to specifically override LocationServices at first launch 
@@ -98,8 +98,9 @@ export default class FocusScreen extends React.Component {
       this.state.validLong)
 
     if(distanceNow >= 0.05){
-      alert("You are not at Gløshuagen, get back there and study!")
+      alert("You are currently not at Gløshuagen (A-blokka)! Get 1 point for every minute you spend there! Study hard, get smarter!")
     } else {
+      alert("Yay, you are at Gløshaugen (A-blokka)! Get 1 point for every minute you spend there! Study hard, get smarter!")
       this._saveFocusPointsAsync();
     }
 
