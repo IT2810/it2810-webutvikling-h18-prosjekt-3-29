@@ -5,7 +5,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import TodoScreen from '../screens/TodoScreen';
 import FocusScreen from '../screens/FocusScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import PomodoroScreen from '../screens/PomodoroScreen';
+import AchievementsScreen from '../screens/AchievementsScreen';
 
 const TodoStack = createStackNavigator({
   Home: TodoScreen,
@@ -34,16 +35,30 @@ FocusStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-speedometer${focused ? '' : '-outline'}` : 'md-speedometer'}
+      name={Platform.OS === 'ios' ? `ios-compass${focused ? '' : '-outline'}` : 'md-compass'}
     />
   ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const PomodoroStack = createStackNavigator({
+  Pomodoros: PomodoroScreen,
 });
 
-SettingsStack.navigationOptions = {
+PomodoroStack.navigationOptions = {
+  tabBarLabel: 'Pomodoro',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-stopwatch${focused ? '' : '-outline'}` : 'md-stopwatch'}
+    />
+  ),
+};
+
+const AchievementsStack = createStackNavigator({
+  Achievements: AchievementsScreen,
+});
+
+AchievementsStack.navigationOptions = {
   tabBarLabel: 'Achievements',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -56,5 +71,6 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   TodoStack,
   FocusStack,
-  SettingsStack,
+  PomodoroStack,
+  AchievementsStack,
 });

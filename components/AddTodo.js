@@ -1,17 +1,10 @@
 import React from 'react';
 import {
-  Button,
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  Fab,
-  TouchableOpacity,
   View,
-  TextInput,
-  Alert,
 } from 'react-native';
+import { Input, Button, Item } from 'native-base';
 
 export default class AddTodo extends React.Component {
 
@@ -36,19 +29,21 @@ export default class AddTodo extends React.Component {
     return (
       <View style={styles.addTodoContainer}>
         <View>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(txt) => this.setState({text: txt})}
-            value={!!this.state.text}
-          />
+          <Item rounded={true} style={styles.inputField}>
+            <Input
+              placeholder="Write your todo here.."
+              onChangeText={(txt) => this.setState({text: txt})}
+              value={this.state.text}
+            />
+            <Button rounded onPress={this.addNewTodo}
+             style={styles.addSpecificTodoBtn}
+           >
+             <Text style={styles.buttonText}>Add!</Text>
+           </Button>
+          </Item>
         </View>
-        <View>
-          <TouchableOpacity onPress={this.addNewTodo}
-           style={styles.addSpecificTodoBtn}
-         >
-           <Text>Add new Todo!</Text>
-         </TouchableOpacity>
-       </View>
+      <View>
+     </View>
     </View>
     );
   }
@@ -58,17 +53,23 @@ const styles = StyleSheet.create({
   inputField: {
     height: 50,
     width: 300,
-    borderColor: 'gray',
-    borderWidth: 1
+    backgroundColor: '#fefefe'
   },
   addSpecificTodoBtn: {
-    backgroundColor: '#ff7096',
+    backgroundColor: '#f95d52',
     bottom: 0,
     height: 30,
+    width: 50,
+    margin: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   addTodoContainer: {
-    bottom: -130,
+    position: 'relative',
     left: 0,
     alignItems: 'stretch',
+    marginTop: 30
+  },
+  buttonText: {
   }
 });

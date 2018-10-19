@@ -1,0 +1,399 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render corrrectly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "bottom": 0,
+      "justifyContent": "flex-end",
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+    }
+  }
+>
+  <MapView
+    customMapStyle={
+      Array [
+        Object {
+          "elementType": "all",
+          "featureType": "all",
+          "stylers": Array [
+            Object {
+              "visibility": "on",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels",
+          "featureType": "all",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+            Object {
+              "saturation": "-100",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.text.fill",
+          "featureType": "all",
+          "stylers": Array [
+            Object {
+              "saturation": 36,
+            },
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 40,
+            },
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.text.stroke",
+          "featureType": "all",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 16,
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.icon",
+          "featureType": "all",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "administrative",
+          "stylers": Array [
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 20,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "administrative",
+          "stylers": Array [
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 17,
+            },
+            Object {
+              "weight": 1.2,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "landscape",
+          "stylers": Array [
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 20,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "landscape",
+          "stylers": Array [
+            Object {
+              "color": "#4d6059",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "landscape",
+          "stylers": Array [
+            Object {
+              "color": "#4d6059",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "landscape.natural",
+          "stylers": Array [
+            Object {
+              "color": "#4d6059",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "poi",
+          "stylers": Array [
+            Object {
+              "lightness": 21,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "poi",
+          "stylers": Array [
+            Object {
+              "color": "#4d6059",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "poi",
+          "stylers": Array [
+            Object {
+              "color": "#4d6059",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "road",
+          "stylers": Array [
+            Object {
+              "visibility": "on",
+            },
+            Object {
+              "color": "#7f8d89",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "road",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "road.highway",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+            Object {
+              "lightness": 17,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "road.highway",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+            Object {
+              "lightness": 29,
+            },
+            Object {
+              "weight": 0.2,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "road.arterial",
+          "stylers": Array [
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 18,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "road.arterial",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "road.arterial",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "road.local",
+          "stylers": Array [
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 16,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "road.local",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "road.local",
+          "stylers": Array [
+            Object {
+              "color": "#7f8d89",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "transit",
+          "stylers": Array [
+            Object {
+              "color": "#000000",
+            },
+            Object {
+              "lightness": 19,
+            },
+          ],
+        },
+        Object {
+          "elementType": "all",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "color": "#2b3638",
+            },
+            Object {
+              "visibility": "on",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "color": "#2b3638",
+            },
+            Object {
+              "lightness": 17,
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.fill",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "color": "#24282b",
+            },
+          ],
+        },
+        Object {
+          "elementType": "geometry.stroke",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "color": "#24282b",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.text",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.text.fill",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.text.stroke",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+        Object {
+          "elementType": "labels.icon",
+          "featureType": "water",
+          "stylers": Array [
+            Object {
+              "visibility": "off",
+            },
+          ],
+        },
+      ]
+    }
+    followUserLocation={true}
+    region={Object {}}
+    showsUserLocation={true}
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
