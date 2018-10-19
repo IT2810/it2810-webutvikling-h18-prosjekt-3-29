@@ -16,9 +16,3 @@ const mock = () => {
     expect (tree).toMatchSnapshot();
     jest.unmock('AsyncStorage');
   })
-
-  it('Mock Async Storage working', async () => {
-    await storage.setItem('testKey', '5')
-    const value = await storage.getItem('testKey')
-    expect(value).toBe('5')
-  })

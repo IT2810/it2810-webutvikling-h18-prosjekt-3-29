@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, AsyncStorage, Image, ScrollView} from 'react-na
 import { NavigationEvents } from "react-navigation";
 import * as Progress from 'react-native-progress';
 
+//Constants for score-system
 const pomodoroWeight = 100
 const focusWeight = 20
 const todoWeight = 30
@@ -17,22 +18,24 @@ export default class AchievementsScreen extends React.Component {
     }
   }
 
+  //Set title on page
   static navigationOptions = {
     title: 'Achievements',
-   };
+  };
 
+  //Fetch user xp from storage
   componentDidMount() {
     this._getXpAsync();
   }
 
+  //Convert from points to xp
   xpConverter = (donePomodoros, focusPoints, finishedTodos) => {
     return donePomodoros*pomodoroWeight + focusPoints*focusWeight + finishedTodos*todoWeight
   }
 
-  /*function that calculates users XP with values from async*/
+  //function that calculates users XP with values from async
   _getXpAsync = async () => {
     try {
-
       let donePomodoros = await AsyncStorage.getItem('pomodoroCounter');
       let focusPoints = await AsyncStorage.getItem('focusPoints')
       let finishedTodos = await AsyncStorage.getItem('finishedTodosCounter')
@@ -45,13 +48,11 @@ export default class AchievementsScreen extends React.Component {
       else                       { finishedTodos = parseInt(finishedTodos) }
 
       let xpPoints = this.xpConverter(donePomodoros, focusPoints, finishedTodos)
-
       this.setState({xp : xpPoints })
       this.setState({level : Math.floor(xpPoints/1000)+1})
       this.setState({percent : xpPoints%1000 / 1000})
 
     } catch (error) {
-      // Error retrieving data
       console.log(error.message);
     }
   }
@@ -75,7 +76,7 @@ export default class AchievementsScreen extends React.Component {
           >
           </Progress.Bar>
 
-          {/*Kjører hver gang denne taben er valgt*/}
+          {/*Conditional rendering*/}
           <NavigationEvents
           onWillFocus={payload => {
               this._getXpAsync()

@@ -11,6 +11,7 @@ it('should render corrrectly', async () => {
 const AsyncStorage = require('react-native');
 const provider = renderer.create(<PomodoroScreen></PomodoroScreen>).getInstance();
 
+//Test that store-to-async functions setsState and are ran without errors
 describe('storage', () => {
   test('_setFinishedPomodorosAsyncAndState should set state with no errors', () => {
       provider._setFinishedPomodorosAsyncAndState('123').then((error) => {

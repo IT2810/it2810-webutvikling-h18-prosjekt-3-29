@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import AddTodo from './AddTodo';
+import TodoElementsContainer from './TodoElementsContainer';
 import {
   Alert,
   View,
@@ -8,11 +10,7 @@ import {
   Text
 } from 'react-native';
 
-import AddTodo from './AddTodo';
-import TodoElementsContainer from './TodoElementsContainer';
-
-export default class TodosContainer extends React.Component {
-
+export default class TodosContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +28,7 @@ export default class TodosContainer extends React.Component {
     this.addUnfinishedTodosToAsync();
   }
 
-  /*if todos are an empty list, show img-placeholder. If not, show todolist*/
+  //if todos are an empty list, show img-placeholder. If not, show todolist
   nrOfElementsInTodo = () => {
     if (this.state.todos.length == 0) {
       this.setState({
@@ -43,7 +41,7 @@ export default class TodosContainer extends React.Component {
     }
   }
 
-  /*function for saving unfinished todos from async*/
+  //function for saving unfinished todos from async
   addUnfinishedTodosToAsync = async () => {
     let unfTodos = this.state.todos;
     try {
@@ -53,7 +51,7 @@ export default class TodosContainer extends React.Component {
     }
   }
 
-  /*function for getting unfinished todos from async*/
+  //function for getting unfinished todos from async
   getUnfinishedTodosFromAsync = async () => {
     try {
       let unfTodos = await AsyncStorage.getItem('unfinishedTodos');
@@ -63,7 +61,7 @@ export default class TodosContainer extends React.Component {
     }
   }
 
-  /*function for adding +1 on NR of completed todos in async storage*/
+  //function for adding +1 on NR of completed todos in async storage
   addFinishedTodosToAsync = async () => {
     let counter = String(this.state.finishedTodos + 1);
     try {
@@ -74,7 +72,7 @@ export default class TodosContainer extends React.Component {
     }
   }
 
-  /*function for getting NR of completed todos in async storage*/
+  //function for getting NR of completed todos in async storage
   getNrFinishedTodosFromAsync = async () => {
     try {
       let nrFinishedTodos = await AsyncStorage.getItem('finishedTodosCounter');
@@ -98,7 +96,6 @@ export default class TodosContainer extends React.Component {
       }, () => {
         this.nrOfElementsInTodo();
       })
-
     }
     else {
       Alert.alert("You already have this todo!");
@@ -111,23 +108,26 @@ export default class TodosContainer extends React.Component {
     }, () => {
       this.nrOfElementsInTodo();
     });
-    /*updates the nr of completed todos in async storage*/
-    this.addFinishedTodosToAsync();
+      this.addFinishedTodosToAsync();
   }
 
   render() {
     if (this.state.showImg) {
-      content = <View style={styles.imgTextPlaceholder}><Image style={styles.img} source={require('../assets/images/planets.png')}/>
-        <Text style={styles.textPlaceholder}>Yey! You have no todos!</Text></View>;
+      content = 
+      <View style={styles.imgTextPlaceholder}>
+        <Image style={styles.img} source={require('../assets/images/planets.png')}/>
+        <Text style={styles.textPlaceholder}>Yey! You have no todos!</Text>
+      </View>;
     }
     if(!this.state.showImg) {
-      content = <View>
-      <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/></View>
+      content = 
+      <View>
+        <TodoElementsContainer todos={this.state.todos} removeTodo={this.removeTodo}/>
+      </View>
     }
-
     return (
       <View>
-      <AddTodo addNewTodo={this.addNewTodo} />
+        <AddTodo addNewTodo={this.addNewTodo} />
         {content}
       </View>
     );

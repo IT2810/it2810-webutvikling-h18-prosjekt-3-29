@@ -9,8 +9,8 @@ export default class FocusScreen extends React.Component {
   state = {
     focusPoints: "",
     region: {},
-    validLat: 63.4156144, //A-blokka på Gløshaugen
-    validLong: 10.4045326, //A-blokka på Gløshaugen
+    validLat: 63.4156144, //A-blokka at Gløshaugen
+    validLong: 10.4045326, //A-blokka at Gløshaugen
     errorMessage: null,
   };
   
@@ -36,7 +36,7 @@ export default class FocusScreen extends React.Component {
   }
 
     /* For Android 6. we need to specifically override LocationServices at first launch 
-    /* due to incompatibility between expo.cli and Android SDK
+       due to incompatibility between expo.cli and Android SDK
     */
   _checkProviderAsync = async () => {
     let {status } = await Expo.Location.getProviderStatusAsync();
@@ -59,20 +59,20 @@ export default class FocusScreen extends React.Component {
     };
 
     /* Get current point score from Async Storage*/
-    _getFocusPointsAsync = async () => {
-      try {
-        let focusPointsFetched = await AsyncStorage.getItem('focusPoints');
-       if (focusPointsFetched == null) {
+  _getFocusPointsAsync = async () => {
+    try {
+      let focusPointsFetched = await AsyncStorage.getItem('focusPoints');
+      if (focusPointsFetched == null) {
         this.setState({focusPoints : 0})
-       }
-       else {
+      }
+      else {
         focusPointsFetched = parseInt(focusPointsFetched)
-         this.setState({focusPoints : focusPointsFetched})
-       }
-     } catch (error) {
-       console.log(error.message);
-     }
+        this.setState({focusPoints : focusPointsFetched})
+      }
+    } catch (error) {
+      console.log(error.message);
     }
+  }
 
   /* Fetch current position using expo-api, set this position to state
   /* Calculate distance from current location to known valid location, 
@@ -110,7 +110,6 @@ export default class FocusScreen extends React.Component {
       latitudeDelta:  0.00922*1.6, //Zoom level
       longitudeDelta: 0.00421*1.6, //Zoom level
     }})  
-    console.log("Current position" + JSON.stringify(location.coords))
   };
 
   render() {

@@ -4,6 +4,7 @@ import App from '../App';
 import renderer from 'react-test-renderer';
 import NavigationTestUtils from 'react-navigation/NavigationTestUtils';
 
+//Stock test that came bundled with expo-init
 describe('App snapshot', () => {
   jest.useFakeTimers();
   beforeEach(() => {
