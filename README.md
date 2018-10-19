@@ -18,7 +18,7 @@ For at kartet skal fungere korrekt på Android-telefonener, skru på Lokasjonstj
 
 Applikasjonen er ment å være en Personal Information Manager for studenter. Alle funksjonene i applikasjonen er utformet som et spill, i håp om at dette formatet øker motivasjonen til å konsentrere seg om studiene. Følgende funksjonalitet er implementert;
 
-- Pomodoro : En spesialstoppeklokke basert på Pomodoroprinsippet. Denne funksjonaliteten er en form for intervall: du har 25 minutter hvor du skal for eksempel lese, og så 5 minutter pause. For hver pomodorosykel får man poeng (exp). 
+- Pomodoro : En spesialstoppeklokke basert på Pomodoroprinsippet. Denne funksjonaliteten er en form for intervall: du skal ha 25 minutter hvor du skal for eksempel lese, og så 5 minutter pause. I betaversjonen vår har vi satt det til å være 25 sekunder og 5 sekunder, slik at de som tester slipper å vente så lenge. For hver pomodorosykel får man poeng (exp). 
 
 - TodoList : En huskeliste som lar deg lage, slette og huke av gjøremål i form av checkboxes. For hvert fullførte gjøremål blir man tildelt poeng (exp) 
 
